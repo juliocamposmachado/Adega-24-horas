@@ -655,60 +655,71 @@ def currency_filter(value):
 # =====================================================
 def init_db():
     """
-    Função para inicializar o banco de dados com dados de exemplo
-    Carrega produtos do arquivo JSON para facilitar atualizações
+    Sincroniza (upsert) os produtos com o arquivo JSON data/produtos.json
+    - Cria as tabelas se não existirem
+    - Atualiza preço/descrição/categoria/imagem/estoque de produtos existentes (por nome)
+    - Insere novos produtos que não existem
+    - Desativa (ativo=False) produtos que não estão mais no JSON
     """
     # Cria as tabelas
     db.create_all()
-    
-    # Verifica se já existem produtos
-    if Produto.query.count() == 0:
-        try:
-            # Carrega produtos do arquivo JSON
-            json_path = os.path.join(os.path.dirname(__file__), 'data', 'produtos.json')
-            
-            with open(json_path, 'r', encoding='utf-8') as f:
-                data = json.load(f)
-            
-            produtos_data = data.get('produtos', [])
-            
-            # Adiciona produtos ao banco
-            for produto_data in produtos_data:
-                produto = Produto(**produto_data)
-                db.session.add(produto)
-            
-            # Salva no banco
-            db.session.commit()
-            print(f"Banco de dados inicializado com {len(produtos_data)} produtos do JSON!")
-            
-        except Exception as e:
-            print(f"Erro ao carregar produtos do JSON: {e}")
-            # Fallback para produtos básicos se houver erro
-            produtos_fallback = [
-                {
-                    'nome': 'Cerveja Skol Lata 350ml',
-                    'descricao': 'Cerveja pilsen gelada',
-                    'preco': 4.50,
-                    'categoria': 'cerveja',
-                    'estoque': 100,
-                    'imagem_url': 'https://images.unsplash.com/photo-1608270586620-248524c67de9?w=400&h=400&fit=crop&crop=center'
-                },
-                {
-                    'nome': 'Coca-Cola Lata 350ml',
-                    'descricao': 'Refrigerante de cola gelado',
-                    'preco': 4.50,
-                    'categoria': 'refrigerante',
-                    'estoque': 120,
-                    'imagem_url': 'https://images.unsplash.com/photo-1581636625402-29b2a704ef13?w=400&h=400&fit=crop&crop=center'
-                }
-            ]
-            
-            for produto_data in produtos_fallback:
-                produto = Produto(**produto_data)
-                db.session.add(produto)
-            
-            db.session.commit()
-            print("Banco inicializado com produtos básicos (fallback)")
+
+    try:
+        # Carrega produtos do arquivo JSON
+        json_path = os.path.join(os.path.dirname(__file__), 'data', 'produtos.json')
+        with open(json_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        produtos_data = data.get('produtos', [])
+
+        existentes = {p.nome: p for p in Produto.query.all()}
+        nomes_json = set()
+        inseridos = 0
+        atualizados = 0
+
+        for pd in produtos_data:
+            nome = pd.get('nome').strip()
+            nomes_json.add(nome)
+            preco = pd.get('preco')
+            descricao = pd.get('descricao')
+            categoria = pd.get('categoria')
+            imagem_url = pd.get('imagem_url')
+            estoque = pd.get('estoque', 100)
+
+            if nome in existentes:
+                p = existentes[nome]
+                p.descricao = descricao
+                p.preco = preco
+                p.categoria = categoria
+                p.imagem_url = imagem_url
+                p.estoque = estoque
+                p.ativo = True
+                atualizados += 1
+            else:
+                novo = Produto(
+                    nome=nome,
+                    descricao=descricao,
+                    preco=preco,
+                    categoria=categoria,
+                    imagem_url=imagem_url,
+                    estoque=estoque,
+                    ativo=True
+                )
+                db.session.add(novo)
+                inseridos += 1
+
+        # Desativa produtos não listados no JSON
+        desativados = 0
+        for p in existentes.values():
+            if p.nome not in nomes_json and p.ativo:
+                p.ativo = False
+                desativados += 1
+
+        db.session.commit()
+        print(f"Produtos sincronizados: inseridos={inseridos}, atualizados={atualizados}, desativados={desativados}")
+
+    except Exception as e:
+        print(f"Erro ao sincronizar produtos do JSON: {e}")
+        # Em caso de erro, não interrompe a aplicação
 
 # PONTO DE ENTRADA DA APLICAÇÃO
 # =====================================================

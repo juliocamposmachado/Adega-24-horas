@@ -1,348 +1,364 @@
 {
   "produtos": [
     {
-      "nome": "Cerveja Skol Lata 350ml",
-      "descricao": "Cerveja pilsen gelada, ideal para relaxar",
-      "preco": 4.50,
+      "nome": "Cerveja Becks 350ml",
+      "descricao": "Cerveja premium alemã, produto para maiores de 18 anos",
+      "preco": 11.98,
       "categoria": "cerveja",
-      "estoque": 120,
+      "estoque": 50,
       "imagem_url": "https://images.unsplash.com/photo-1608270586620-248524c67de9?w=400&h=400&fit=crop&crop=center"
     },
     {
-      "nome": "Cerveja Brahma Duplo Malte 350ml",
-      "descricao": "Cerveja encorpada com duplo malte",
-      "preco": 5.20,
+      "nome": "Cerveja Brahma Duplo Malte 269ml",
+      "descricao": "Cerveja encorpada com duplo malte, produto para maiores de 18 anos",
+      "preco": 5.93,
       "categoria": "cerveja",
       "estoque": 100,
       "imagem_url": "https://images.unsplash.com/photo-1571613316887-6f8d5cbf7ef7?w=400&h=400&fit=crop&crop=center"
     },
     {
-      "nome": "Cerveja Heineken Long Neck 330ml",
-      "descricao": "Cerveja premium importada holandesa",
-      "preco": 8.90,
+      "nome": "Cerveja Budweiser Lata 269ml",
+      "descricao": "Cerveja americana premium, produto para maiores de 18 anos",
+      "preco": 6.93,
       "categoria": "cerveja",
       "estoque": 80,
       "imagem_url": "https://images.unsplash.com/photo-1618885472179-5e474019f2a9?w=400&h=400&fit=crop&crop=center"
     },
     {
-      "nome": "Cerveja Corona Extra 355ml",
-      "descricao": "Cerveja mexicana premium refrescante",
-      "preco": 9.50,
+      "nome": "Cerveja Estrella Galicia Lata 269ml",
+      "descricao": "Cerveja espanhola premium, produto para maiores de 18 anos",
+      "preco": 7.98,
       "categoria": "cerveja",
       "estoque": 60,
       "imagem_url": "https://images.unsplash.com/photo-1596464716127-f2a82984de30?w=400&h=400&fit=crop&crop=center"
     },
     {
-      "nome": "Cerveja Stella Artois 275ml",
-      "descricao": "Cerveja belga premium elegante",
-      "preco": 7.80,
+      "nome": "Cerveja Heineken Lata 269ml",
+      "descricao": "Cerveja holandesa premium, produto para maiores de 18 anos",
+      "preco": 8.98,
       "categoria": "cerveja",
       "estoque": 70,
       "imagem_url": "https://images.unsplash.com/photo-1569976710208-b2cd4b4ade84?w=400&h=400&fit=crop&crop=center"
     },
     {
-      "nome": "Cerveja Budweiser Lata 350ml",
-      "descricao": "Cerveja americana premium suave",
-      "preco": 6.90,
+      "nome": "Cerveja Heineken Longa Vida 350ml",
+      "descricao": "Cerveja holandesa longa vida, produto para maiores de 18 anos",
+      "preco": 9.98,
       "categoria": "cerveja",
-      "estoque": 90,
+      "estoque": 65,
       "imagem_url": "https://images.unsplash.com/photo-1608270586620-248524c67de9?w=400&h=400&fit=crop&crop=center"
     },
     {
+      "nome": "Cerveja Petra 350ml",
+      "descricao": "Cerveja brasileira puro malte, produto para maiores de 18 anos",
+      "preco": 6.98,
+      "categoria": "cerveja",
+      "estoque": 80,
+      "imagem_url": "https://images.unsplash.com/photo-1571613316887-6f8d5cbf7ef7?w=400&h=400&fit=crop&crop=center"
+    },
+    {
+      "nome": "Cerveja Skol Lata 269ml",
+      "descricao": "Cerveja pilsen gelada, produto para maiores de 18 anos",
+      "preco": 4.98,
+      "categoria": "cerveja",
+      "estoque": 120,
+      "imagem_url": "https://images.unsplash.com/photo-1618885472179-5e474019f2a9?w=400&h=400&fit=crop&crop=center"
+    },
+    {
+      "nome": "Cerveja Skol Puro Malte 269ml",
+      "descricao": "Cerveja puro malte premium, produto para maiores de 18 anos",
+      "preco": 5.98,
+      "categoria": "cerveja",
+      "estoque": 90,
+      "imagem_url": "https://images.unsplash.com/photo-1596464716127-f2a82984de30?w=400&h=400&fit=crop&crop=center"
+    },
+    {
+      "nome": "Cerveja Stella Artois Lata 269ml",
+      "descricao": "Cerveja belga premium elegante, produto para maiores de 18 anos",
+      "preco": 7.98,
+      "categoria": "cerveja",
+      "estoque": 70,
+      "imagem_url": "https://images.unsplash.com/photo-1569976710208-b2cd4b4ade84?w=400&h=400&fit=crop&crop=center"
+    },
+    {
+      "nome": "Água Crystal 500ml",
+      "descricao": "Água mineral natural Crystal sem gás",
+      "preco": 2.98,
+      "categoria": "agua",
+      "estoque": 200,
+      "imagem_url": "https://images.unsplash.com/photo-1559839914-17aae19601d3?w=400&h=400&fit=crop&crop=center"
+    },
+    {
+      "nome": "Água Crystal com Gás 500ml",
+      "descricao": "Água mineral Crystal gaseificada refrescante",
+      "preco": 3.48,
+      "categoria": "agua",
+      "estoque": 150,
+      "imagem_url": "https://images.unsplash.com/photo-1589296169443-a9914ad28632?w=400&h=400&fit=crop&crop=center"
+    },
+    {
+      "nome": "Água Crystal 1,5L",
+      "descricao": "Água mineral Crystal grande familiar",
+      "preco": 4.48,
+      "categoria": "agua",
+      "estoque": 100,
+      "imagem_url": "https://images.unsplash.com/photo-1575829394815-10beb5ac9a8e?w=400&h=400&fit=crop&crop=center"
+    },
+    {
+      "nome": "Água de Coco Kero Coco 330ml",
+      "descricao": "Água de coco natural refrescante",
+      "preco": 5.48,
+      "categoria": "bebida",
+      "estoque": 80,
+      "imagem_url": "https://images.unsplash.com/photo-1544145945-f90425340c7e?w=400&h=400&fit=crop&crop=center"
+    },
+    {
+      "nome": "Água Tônica Antarctica 350ml",
+      "descricao": "Água tônica premium para drinks",
+      "preco": 6.48,
+      "categoria": "agua",
+      "estoque": 70,
+      "imagem_url": "https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=400&h=400&fit=crop&crop=center"
+    },
+    {
+      "nome": "Café Utam Mais Açúcar 300ml",
+      "descricao": "Café gelado com açúcar cremoso",
+      "preco": 7.48,
+      "categoria": "bebida",
+      "estoque": 60,
+      "imagem_url": "https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?w=400&h=400&fit=crop&crop=center"
+    },
+    {
+      "nome": "Cachaça 51 965ml",
+      "descricao": "Cachaça tradicional brasileira, produto para maiores de 18 anos",
+      "preco": 25.98,
+      "categoria": "destilados",
+      "estoque": 40,
+      "imagem_url": "https://images.unsplash.com/photo-1544145945-f90425340c7e?w=400&h=400&fit=crop&crop=center"
+    },
+    {
+      "nome": "Champagne Chandon 750ml",
+      "descricao": "Espumante premium francês, produto para maiores de 18 anos",
+      "preco": 129.98,
+      "categoria": "vinho",
+      "estoque": 15,
+      "imagem_url": "https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=400&h=400&fit=crop&crop=center"
+    },
+    {
+      "nome": "Chá Leão Fuze Limão 300ml",
+      "descricao": "Chá gelado sabor limão refrescante",
+      "preco": 4.98,
+      "categoria": "bebida",
+      "estoque": 90,
+      "imagem_url": "https://images.unsplash.com/photo-1625740614234-86d6d5b7b5e3?w=400&h=400&fit=crop&crop=center"
+    },
+    {
+      "nome": "Chá Leão Fuze Pêssego 300ml",
+      "descricao": "Chá gelado sabor pêssego doce",
+      "preco": 4.98,
+      "categoria": "bebida",
+      "estoque": 90,
+      "imagem_url": "https://images.unsplash.com/photo-1624517452488-04869289c4ca?w=400&h=400&fit=crop&crop=center"
+    },
+    {
+      "nome": "Coca-Cola Lata 220ml",
+      "descricao": "Refrigerante de cola mini gelado",
+      "preco": 3.48,
+      "categoria": "refrigerante",
+      "estoque": 150,
+      "imagem_url": "https://images.unsplash.com/photo-1581636625402-29b2a704ef13?w=400&h=400&fit=crop&crop=center"
+    },
+    {
+      "nome": "Coca-Cola Lata 350ml",
+      "descricao": "Refrigerante de cola gelado tradicional",
+      "preco": 4.98,
+      "categoria": "refrigerante",
+      "estoque": 200,
+      "imagem_url": "https://images.unsplash.com/photo-1629203849820-fdd70d49c38e?w=400&h=400&fit=crop&crop=center"
+    },
+    {
+      "nome": "Coca-Cola 2L",
+      "descricao": "Refrigerante de cola grande familiar",
+      "preco": 10.98,
+      "categoria": "refrigerante",
+      "estoque": 80,
+      "imagem_url": "https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?w=400&h=400&fit=crop&crop=center"
+    },
+    {
+      "nome": "Coca-Cola Zero Lata 220ml",
+      "descricao": "Refrigerante de cola sem açúcar mini",
+      "preco": 3.48,
+      "categoria": "refrigerante",
+      "estoque": 120,
+      "imagem_url": "https://images.unsplash.com/photo-1625740614234-86d6d5b7b5e3?w=400&h=400&fit=crop&crop=center"
+    },
+    {
+      "nome": "Coca-Cola Zero Lata 350ml",
+      "descricao": "Refrigerante de cola zero açúcar",
+      "preco": 4.98,
+      "categoria": "refrigerante",
+      "estoque": 150,
+      "imagem_url": "https://images.unsplash.com/photo-1624517452488-04869289c4ca?w=400&h=400&fit=crop&crop=center"
+    },
+    {
+      "nome": "Fanta Laranja Lata 220ml",
+      "descricao": "Refrigerante sabor laranja mini",
+      "preco": 3.48,
+      "categoria": "refrigerante",
+      "estoque": 120,
+      "imagem_url": "https://images.unsplash.com/photo-1555992457-f9b7a5b7b5e3?w=400&h=400&fit=crop&crop=center"
+    },
+    {
+      "nome": "Fanta Laranja Lata 350ml",
+      "descricao": "Refrigerante sabor laranja gelado",
+      "preco": 4.98,
+      "categoria": "refrigerante",
+      "estoque": 130,
+      "imagem_url": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=400&fit=crop&crop=center"
+    },
+    {
+      "nome": "Guaraná Antarctica Lata 220ml",
+      "descricao": "Refrigerante de guaraná brasileiro mini",
+      "preco": 3.48,
+      "categoria": "refrigerante",
+      "estoque": 140,
+      "imagem_url": "https://images.unsplash.com/photo-1590736969955-71cc94901144?w=400&h=400&fit=crop&crop=center"
+    },
+    {
+      "nome": "Guaraná Antarctica Lata 350ml",
+      "descricao": "Refrigerante de guaraná brasileiro gelado",
+      "preco": 4.98,
+      "categoria": "refrigerante",
+      "estoque": 180,
+      "imagem_url": "https://images.unsplash.com/photo-1625740614234-86d6d5b7b5e3?w=400&h=400&fit=crop&crop=center"
+    },
+    {
+      "nome": "Guaraná Antarctica Zero Lata 350ml",
+      "descricao": "Refrigerante de guaraná zero açúcar",
+      "preco": 4.98,
+      "categoria": "refrigerante",
+      "estoque": 100,
+      "imagem_url": "https://images.unsplash.com/photo-1624517452488-04869289c4ca?w=400&h=400&fit=crop&crop=center"
+    },
+    {
+      "nome": "H2OH! Limão 500ml",
+      "descricao": "Bebida isotônica sabor limão",
+      "preco": 5.98,
+      "categoria": "bebida",
+      "estoque": 70,
+      "imagem_url": "https://images.unsplash.com/photo-1589296169443-a9914ad28632?w=400&h=400&fit=crop&crop=center"
+    },
+    {
+      "nome": "Monster Energy 473ml",
+      "descricao": "Energético intenso sabor original",
+      "preco": 14.98,
+      "categoria": "energetico",
+      "estoque": 40,
+      "imagem_url": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=400&fit=crop&crop=center"
+    },
+    {
+      "nome": "Red Bull Energy 250ml",
+      "descricao": "Energético premium para energia",
+      "preco": 12.98,
+      "categoria": "energetico",
+      "estoque": 60,
+      "imagem_url": "https://images.unsplash.com/photo-1555992457-f9b7a5b7b5e3?w=400&h=400&fit=crop&crop=center"
+    },
+    {
+      "nome": "Refrigerante Kuat Lata 350ml",
+      "descricao": "Refrigerante sabor guaraná com açaí",
+      "preco": 4.98,
+      "categoria": "refrigerante",
+      "estoque": 90,
+      "imagem_url": "https://images.unsplash.com/photo-1590736969955-71cc94901144?w=400&h=400&fit=crop&crop=center"
+    },
+    {
+      "nome": "Schweppes Citrus 350ml",
+      "descricao": "Refrigerante sabor citrus premium",
+      "preco": 5.98,
+      "categoria": "refrigerante",
+      "estoque": 80,
+      "imagem_url": "https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=400&h=400&fit=crop&crop=center"
+    },
+    {
+      "nome": "Sprite Lata 220ml",
+      "descricao": "Refrigerante de limão mini refrescante",
+      "preco": 3.48,
+      "categoria": "refrigerante",
+      "estoque": 110,
+      "imagem_url": "https://images.unsplash.com/photo-1624517452488-04869289c4ca?w=400&h=400&fit=crop&crop=center"
+    },
+    {
+      "nome": "Sprite Lata 350ml",
+      "descricao": "Refrigerante de limão refrescante gelado",
+      "preco": 4.98,
+      "categoria": "refrigerante",
+      "estoque": 120,
+      "imagem_url": "https://images.unsplash.com/photo-1624517452488-04869289c4ca?w=400&h=400&fit=crop&crop=center"
+    },
+    {
+      "nome": "Suco Del Valle Fresh Laranja 450ml",
+      "descricao": "Suco natural de laranja concentrado",
+      "preco": 6.98,
+      "categoria": "suco",
+      "estoque": 70,
+      "imagem_url": "https://images.unsplash.com/photo-1544145945-f90425340c7e?w=400&h=400&fit=crop&crop=center"
+    },
+    {
+      "nome": "Suco Del Valle Fresh Uva 450ml",
+      "descricao": "Suco natural de uva concentrado",
+      "preco": 6.98,
+      "categoria": "suco",
+      "estoque": 70,
+      "imagem_url": "https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?w=400&h=400&fit=crop&crop=center"
+    },
+    {
+      "nome": "Suco Maguary Laranja 1L",
+      "descricao": "Suco de laranja concentrado familiar",
+      "preco": 8.98,
+      "categoria": "suco",
+      "estoque": 60,
+      "imagem_url": "https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?w=400&h=400&fit=crop&crop=center"
+    },
+    {
+      "nome": "Suco Maguary Uva 1L",
+      "descricao": "Suco de uva concentrado familiar",
+      "preco": 8.98,
+      "categoria": "suco",
+      "estoque": 60,
+      "imagem_url": "https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?w=400&h=400&fit=crop&crop=center"
+    },
+    {
       "nome": "Vinho Tinto Seco 750ml",
-      "descricao": "Vinho tinto nacional seco, harmoniza com carnes",
-      "preco": 32.90,
+      "descricao": "Vinho tinto nacional seco, produto para maiores de 18 anos",
+      "preco": 32.98,
       "categoria": "vinho",
       "estoque": 40,
       "imagem_url": "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?w=400&h=400&fit=crop&crop=center"
     },
     {
       "nome": "Vinho Branco Suave 750ml",
-      "descricao": "Vinho branco suave, perfeito para peixes",
-      "preco": 35.50,
+      "descricao": "Vinho branco suave nacional, produto para maiores de 18 anos",
+      "preco": 35.98,
       "categoria": "vinho",
       "estoque": 35,
       "imagem_url": "https://images.unsplash.com/photo-1547595628-c61a29f496f0?w=400&h=400&fit=crop&crop=center"
     },
     {
-      "nome": "Vinho Rosé 750ml",
-      "descricao": "Vinho rosé refrescante e frutado",
-      "preco": 38.90,
-      "categoria": "vinho",
-      "estoque": 30,
-      "imagem_url": "https://images.unsplash.com/photo-1553361371-9b22f78e8b1d?w=400&h=400&fit=crop&crop=center"
-    },
-    {
-      "nome": "Espumante Nacional 750ml",
-      "descricao": "Espumante brut nacional para celebrações",
-      "preco": 42.90,
-      "categoria": "vinho",
-      "estoque": 25,
-      "imagem_url": "https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=400&h=400&fit=crop&crop=center"
-    },
-    {
-      "nome": "Cachaça 51 965ml",
-      "descricao": "Cachaça tradicional brasileira premium",
-      "preco": 18.90,
-      "categoria": "destilados",
-      "estoque": 50,
-      "imagem_url": "https://images.unsplash.com/photo-1544145945-f90425340c7e?w=400&h=400&fit=crop&crop=center"
-    },
-    {
-      "nome": "Cachaça Artesanal Envelhecida 670ml",
-      "descricao": "Cachaça artesanal premium envelhecida",
-      "preco": 45.00,
-      "categoria": "destilados",
-      "estoque": 20,
-      "imagem_url": "https://images.unsplash.com/photo-1613743983303-b3e89f8a2b80?w=400&h=400&fit=crop&crop=center"
-    },
-    {
       "nome": "Vodka Smirnoff 998ml",
-      "descricao": "Vodka premium importada suave",
-      "preco": 52.90,
+      "descricao": "Vodka premium importada suave, produto para maiores de 18 anos",
+      "preco": 54.98,
       "categoria": "destilados",
       "estoque": 30,
       "imagem_url": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=400&fit=crop&crop=center"
-    },
-    {
-      "nome": "Vodka Absolut 1L",
-      "descricao": "Vodka sueca premium pura",
-      "preco": 89.90,
-      "categoria": "destilados",
-      "estoque": 15,
-      "imagem_url": "https://images.unsplash.com/photo-1569529465841-dfecdab7503b?w=400&h=400&fit=crop&crop=center"
     },
     {
       "nome": "Whisky Red Label 1L",
-      "descricao": "Whisky escocês blend tradicional",
-      "preco": 89.90,
+      "descricao": "Whisky escocês blend tradicional, produto para maiores de 18 anos",
+      "preco": 89.98,
       "categoria": "destilados",
       "estoque": 25,
       "imagem_url": "https://images.unsplash.com/photo-1527281400683-1aae777175f8?w=400&h=400&fit=crop&crop=center"
-    },
-    {
-      "nome": "Whisky Black Label 1L",
-      "descricao": "Whisky escocês premium 12 anos",
-      "preco": 189.90,
-      "categoria": "destilados",
-      "estoque": 12,
-      "imagem_url": "https://images.unsplash.com/photo-1618885472179-5e474019f2a9?w=400&h=400&fit=crop&crop=center"
-    },
-    {
-      "nome": "Gin Tanqueray 750ml",
-      "descricao": "Gin inglês premium com botânicos",
-      "preco": 98.90,
-      "categoria": "destilados",
-      "estoque": 18,
-      "imagem_url": "https://images.unsplash.com/photo-1571104508999-893933ded431?w=400&h=400&fit=crop&crop=center"
-    },
-    {
-      "nome": "Coca-Cola Lata 350ml",
-      "descricao": "Refrigerante de cola gelado",
-      "preco": 4.50,
-      "categoria": "refrigerante",
-      "estoque": 200,
-      "imagem_url": "https://images.unsplash.com/photo-1581636625402-29b2a704ef13?w=400&h=400&fit=crop&crop=center"
-    },
-    {
-      "nome": "Coca-Cola 2L",
-      "descricao": "Refrigerante de cola grande",
-      "preco": 9.90,
-      "categoria": "refrigerante",
-      "estoque": 80,
-      "imagem_url": "https://images.unsplash.com/photo-1629203849820-fdd70d49c38e?w=400&h=400&fit=crop&crop=center"
-    },
-    {
-      "nome": "Pepsi Lata 350ml",
-      "descricao": "Refrigerante de cola refrescante",
-      "preco": 4.00,
-      "categoria": "refrigerante",
-      "estoque": 150,
-      "imagem_url": "https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?w=400&h=400&fit=crop&crop=center"
-    },
-    {
-      "nome": "Guaraná Antarctica Lata 350ml",
-      "descricao": "Refrigerante de guaraná brasileiro",
-      "preco": 4.20,
-      "categoria": "refrigerante",
-      "estoque": 180,
-      "imagem_url": "https://images.unsplash.com/photo-1625740614234-86d6d5b7b5e3?w=400&h=400&fit=crop&crop=center"
-    },
-    {
-      "nome": "Sprite Lata 350ml",
-      "descricao": "Refrigerante de limão refrescante",
-      "preco": 4.00,
-      "categoria": "refrigerante",
-      "estoque": 120,
-      "imagem_url": "https://images.unsplash.com/photo-1624517452488-04869289c4ca?w=400&h=400&fit=crop&crop=center"
-    },
-    {
-      "nome": "Red Bull 250ml",
-      "descricao": "Energético premium para energia",
-      "preco": 12.90,
-      "categoria": "energetico",
-      "estoque": 60,
-      "imagem_url": "https://images.unsplash.com/photo-1555992457-f9b7a5b7b5e3?w=400&h=400&fit=crop&crop=center"
-    },
-    {
-      "nome": "Monster Energy 473ml",
-      "descricao": "Energético intenso sabor original",
-      "preco": 11.90,
-      "categoria": "energetico",
-      "estoque": 40,
-      "imagem_url": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=400&fit=crop&crop=center"
-    },
-    {
-      "nome": "TNT Energy 350ml",
-      "descricao": "Energético nacional potente",
-      "preco": 8.90,
-      "categoria": "energetico",
-      "estoque": 50,
-      "imagem_url": "https://images.unsplash.com/photo-1590736969955-71cc94901144?w=400&h=400&fit=crop&crop=center"
-    },
-    {
-      "nome": "Água Mineral 500ml",
-      "descricao": "Água mineral natural sem gás",
-      "preco": 3.00,
-      "categoria": "agua",
-      "estoque": 300,
-      "imagem_url": "https://images.unsplash.com/photo-1559839914-17aae19601d3?w=400&h=400&fit=crop&crop=center"
-    },
-    {
-      "nome": "Água Mineral 1,5L",
-      "descricao": "Água mineral natural grande",
-      "preco": 5.50,
-      "categoria": "agua",
-      "estoque": 150,
-      "imagem_url": "https://images.unsplash.com/photo-1575829394815-10beb5ac9a8e?w=400&h=400&fit=crop&crop=center"
-    },
-    {
-      "nome": "Água com Gás 500ml",
-      "descricao": "Água mineral gaseificada refrescante",
-      "preco": 4.00,
-      "categoria": "agua",
-      "estoque": 100,
-      "imagem_url": "https://images.unsplash.com/photo-1589296169443-a9914ad28632?w=400&h=400&fit=crop&crop=center"
-    },
-    {
-      "nome": "Água Tônica 350ml",
-      "descricao": "Água tônica premium para drinks",
-      "preco": 6.50,
-      "categoria": "agua",
-      "estoque": 80,
-      "imagem_url": "https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=400&h=400&fit=crop&crop=center"
-    },
-    {
-      "nome": "Cerveja Amstel Lata 350ml",
-      "descricao": "Cerveja holandesa suave e refrescante",
-      "preco": 6.90,
-      "categoria": "cerveja",
-      "estoque": 85,
-      "imagem_url": "https://images.unsplash.com/photo-1571613316887-6f8d5cbf7ef7?w=400&h=400&fit=crop&crop=center"
-    },
-    {
-      "nome": "Cerveja Original Long Neck 355ml",
-      "descricao": "Cerveja alemã premium pura",
-      "preco": 7.50,
-      "categoria": "cerveja",
-      "estoque": 75,
-      "imagem_url": "https://images.unsplash.com/photo-1608270586620-248524c67de9?w=400&h=400&fit=crop&crop=center"
-    },
-    {
-      "nome": "Tequila José Cuervo 750ml",
-      "descricao": "Tequila mexicana premium dourada",
-      "preco": 125.90,
-      "categoria": "destilados",
-      "estoque": 10,
-      "imagem_url": "https://images.unsplash.com/photo-1544145945-f90425340c7e?w=400&h=400&fit=crop&crop=center"
-    },
-    {
-      "nome": "Rum Bacardi 980ml",
-      "descricao": "Rum caribenho branco suave",
-      "preco": 65.90,
-      "categoria": "destilados",
-      "estoque": 20,
-      "imagem_url": "https://images.unsplash.com/photo-1613743983303-b3e89f8a2b80?w=400&h=400&fit=crop&crop=center"
-    },
-    {
-      "nome": "Conhaque Dreher 1L",
-      "descricao": "Conhaque nacional tradicional",
-      "preco": 35.90,
-      "categoria": "destilados",
-      "estoque": 25,
-      "imagem_url": "https://images.unsplash.com/photo-1527281400683-1aae777175f8?w=400&h=400&fit=crop&crop=center"
-    },
-    {
-      "nome": "Cerveja Antarctica Lata 350ml",
-      "descricao": "Cerveja pilsen nacional gelada",
-      "preco": 4.20,
-      "categoria": "cerveja",
-      "estoque": 110,
-      "imagem_url": "https://images.unsplash.com/photo-1569976710208-b2cd4b4ade84?w=400&h=400&fit=crop&crop=center"
-    },
-    {
-      "nome": "Cerveja Bohemia Lata 350ml",
-      "descricao": "Cerveja premium pilsen puro malte",
-      "preco": 5.90,
-      "categoria": "cerveja",
-      "estoque": 95,
-      "imagem_url": "https://images.unsplash.com/photo-1596464716127-f2a82984de30?w=400&h=400&fit=crop&crop=center"
-    },
-    {
-      "nome": "Suco Del Valle Lata 290ml",
-      "descricao": "Suco de fruta natural concentrado",
-      "preco": 5.50,
-      "categoria": "suco",
-      "estoque": 90,
-      "imagem_url": "https://images.unsplash.com/photo-1544145945-f90425340c7e?w=400&h=400&fit=crop&crop=center"
-    },
-    {
-      "nome": "Suco Maguary 1L",
-      "descricao": "Suco de fruta concentrado familiar",
-      "preco": 8.90,
-      "categoria": "suco",
-      "estoque": 60,
-      "imagem_url": "https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?w=400&h=400&fit=crop&crop=center"
-    },
-    {
-      "nome": "Champagne Chandon 750ml",
-      "descricao": "Espumante premium para celebrações",
-      "preco": 89.90,
-      "categoria": "vinho",
-      "estoque": 15,
-      "imagem_url": "https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=400&h=400&fit=crop&crop=center"
-    },
-    {
-      "nome": "Licor Amarula 750ml",
-      "descricao": "Licor cremoso sul-africano premium",
-      "preco": 75.90,
-      "categoria": "destilados",
-      "estoque": 20,
-      "imagem_url": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=400&fit=crop&crop=center"
-    },
-    {
-      "nome": "Licor Baileys 750ml",
-      "descricao": "Licor irlandês cremoso de whisky",
-      "preco": 98.90,
-      "categoria": "destilados",
-      "estoque": 18,
-      "imagem_url": "https://images.unsplash.com/photo-1569529465841-dfecdab7503b?w=400&h=400&fit=crop&crop=center"
-    },
-    {
-      "nome": "Cerveja Eisenbahn Pilsner 355ml",
-      "descricao": "Cerveja artesanal alemã premium",
-      "preco": 8.50,
-      "categoria": "cerveja",
-      "estoque": 65,
-      "imagem_url": "https://images.unsplash.com/photo-1571613316887-6f8d5cbf7ef7?w=400&h=400&fit=crop&crop=center"
-    },
-    {
-      "nome": "Energético Fusion 350ml",
-      "descricao": "Energético nacional açaí guaraná",
-      "preco": 7.90,
-      "categoria": "energetico",
-      "estoque": 70,
-      "imagem_url": "https://images.unsplash.com/photo-1590736969955-71cc94901144?w=400&h=400&fit=crop&crop=center"
     }
   ]
 }
