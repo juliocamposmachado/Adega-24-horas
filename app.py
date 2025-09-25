@@ -577,100 +577,59 @@ def currency_filter(value):
 def init_db():
     """
     Função para inicializar o banco de dados com dados de exemplo
+    Carrega produtos do arquivo JSON para facilitar atualizações
     """
     # Cria as tabelas
     db.create_all()
     
     # Verifica se já existem produtos
     if Produto.query.count() == 0:
-        # Dados de exemplo baseados na sua adega
-        produtos_exemplo = [
-            # Cervejas
-            {
-                'nome': 'Cerveja Skol Lata 350ml',
-                'descricao': 'Cerveja pilsen gelada, ideal para relaxar',
-                'preco': 3.50,
-                'categoria': 'cerveja',
-                'estoque': 100,
-                'imagem_url': '/static/images/skol.jpg'
-            },
-            {
-                'nome': 'Cerveja Brahma Duplo Malte 350ml',
-                'descricao': 'Cerveja encorpada com duplo malte',
-                'preco': 4.20,
-                'categoria': 'cerveja',
-                'estoque': 80,
-                'imagem_url': '/static/images/brahma.jpg'
-            },
-            {
-                'nome': 'Cerveja Heineken Long Neck 330ml',
-                'descricao': 'Cerveja premium importada holandesa',
-                'preco': 6.90,
-                'categoria': 'cerveja',
-                'estoque': 60,
-                'imagem_url': '/static/images/heineken.jpg'
-            },
-            # Vinhos
-            {
-                'nome': 'Vinho Tinto Seco 750ml',
-                'descricao': 'Vinho tinto nacional seco, harmoniza com carnes',
-                'preco': 25.90,
-                'categoria': 'vinho',
-                'estoque': 30,
-                'imagem_url': '/static/images/vinho_tinto.jpg'
-            },
-            {
-                'nome': 'Vinho Branco Suave 750ml',
-                'descricao': 'Vinho branco suave, perfeito para peixes',
-                'preco': 28.50,
-                'categoria': 'vinho',
-                'estoque': 25,
-                'imagem_url': '/static/images/vinho_branco.jpg'
-            },
-            # Destilados
-            {
-                'nome': 'Cachaça Artesanal 670ml',
-                'descricao': 'Cachaça artesanal premium envelhecida',
-                'preco': 35.00,
-                'categoria': 'destilados',
-                'estoque': 20,
-                'imagem_url': '/static/images/cachaca.jpg'
-            },
-            {
-                'nome': 'Vodka Premium 1L',
-                'descricao': 'Vodka premium importada, pura e suave',
-                'preco': 45.90,
-                'categoria': 'destilados',
-                'estoque': 15,
-                'imagem_url': '/static/images/vodka.jpg'
-            },
-            # Refrigerantes e Água
-            {
-                'nome': 'Coca-Cola Lata 350ml',
-                'descricao': 'Refrigerante de cola gelado',
-                'preco': 4.00,
-                'categoria': 'refrigerante',
-                'estoque': 120,
-                'imagem_url': '/static/images/coca.jpg'
-            },
-            {
-                'nome': 'Água Mineral 500ml',
-                'descricao': 'Água mineral natural sem gás',
-                'preco': 2.50,
-                'categoria': 'agua',
-                'estoque': 150,
-                'imagem_url': '/static/images/agua.jpg'
-            }
-        ]
-        
-        # Adiciona produtos ao banco
-        for produto_data in produtos_exemplo:
-            produto = Produto(**produto_data)
-            db.session.add(produto)
-        
-        # Salva no banco
-        db.session.commit()
-        print("Banco de dados inicializado com produtos de exemplo!")
+        try:
+            # Carrega produtos do arquivo JSON
+            json_path = os.path.join(os.path.dirname(__file__), 'data', 'produtos.json')
+            
+            with open(json_path, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+            
+            produtos_data = data.get('produtos', [])
+            
+            # Adiciona produtos ao banco
+            for produto_data in produtos_data:
+                produto = Produto(**produto_data)
+                db.session.add(produto)
+            
+            # Salva no banco
+            db.session.commit()
+            print(f"Banco de dados inicializado com {len(produtos_data)} produtos do JSON!")
+            
+        except Exception as e:
+            print(f"Erro ao carregar produtos do JSON: {e}")
+            # Fallback para produtos básicos se houver erro
+            produtos_fallback = [
+                {
+                    'nome': 'Cerveja Skol Lata 350ml',
+                    'descricao': 'Cerveja pilsen gelada',
+                    'preco': 4.50,
+                    'categoria': 'cerveja',
+                    'estoque': 100,
+                    'imagem_url': 'https://images.unsplash.com/photo-1608270586620-248524c67de9?w=400&h=400&fit=crop&crop=center'
+                },
+                {
+                    'nome': 'Coca-Cola Lata 350ml',
+                    'descricao': 'Refrigerante de cola gelado',
+                    'preco': 4.50,
+                    'categoria': 'refrigerante',
+                    'estoque': 120,
+                    'imagem_url': 'https://images.unsplash.com/photo-1581636625402-29b2a704ef13?w=400&h=400&fit=crop&crop=center'
+                }
+            ]
+            
+            for produto_data in produtos_fallback:
+                produto = Produto(**produto_data)
+                db.session.add(produto)
+            
+            db.session.commit()
+            print("Banco inicializado com produtos básicos (fallback)")
 
 # PONTO DE ENTRADA DA APLICAÇÃO
 # =====================================================
