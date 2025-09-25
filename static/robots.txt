@@ -1,38 +1,65 @@
+# Robots.txt para Adega 24 horas Rádio Tatuapé FM
+# Bebidas, vinhos, cervejas, destilados, refrigerantes - Tatuapé SP
+# Entrega 24 horas via WhatsApp | Preços populares
+
 User-agent: *
 Allow: /
 
-# Permitir indexação de todas as páginas principais
+# Permitir indexação completa para melhor SEO
 Allow: /static/
+Allow: /static/images/
+Allow: /static/css/
+Allow: /static/js/
 Allow: /carrinho
 Allow: /checkout
+Allow: /produto/
+Allow: /?categoria=*
 
-# Bloquear páginas administrativas e de desenvolvimento
+# Bloquear apenas páginas sensíveis
 Disallow: /admin
 Disallow: /api/
 Disallow: /_debug
+Disallow: /login
 
-# Sitemap
+# Sitemap para indexação completa
 Sitemap: https://adega-24-horas-ifood.vercel.app/sitemap.xml
 
-# Crawl-delay para não sobrecarregar o servidor
-Crawl-delay: 1
-
-# Informações específicas para Google
+# Otimizado para motores de busca principais
 User-agent: Googlebot
 Allow: /
 Crawl-delay: 0
 
-# Informações específicas para Bing
 User-agent: Bingbot
 Allow: /
 Crawl-delay: 1
 
-# Informações específicas para Facebook (compartilhamentos)
+User-agent: YandexBot
+Allow: /
+Crawl-delay: 1
+
+# Otimizado para redes sociais e compartilhamento
 User-agent: facebookexternalhit
 Allow: /
 Allow: /static/images/
+Crawl-delay: 0
 
-# Informações específicas para WhatsApp (compartilhamentos)
 User-agent: WhatsApp
 Allow: /
 Allow: /static/images/
+Crawl-delay: 0
+
+User-agent: Twitterbot
+Allow: /
+Allow: /static/images/
+Crawl-delay: 0
+
+# Crawl-delay padrão otimizado
+Crawl-delay: 1
+
+# Keywords para indexação:
+# adega, bebidas, cervejas geladas, vinhos, destilados, refrigerantes
+# tatuapé, são paulo, entrega 24 horas, whatsapp, pix
+# preços populares, radio tatuape fm, vila regente feijo
+# águas, energéticos, licores, cachaça, vodka, whisky
+# cerveja artesanal, vinho tinto, vinho branco, espumante
+# coca cola, pepsi, guaraná, refrigerante diet, zero açúcar

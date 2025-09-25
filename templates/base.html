@@ -21,7 +21,7 @@
     
     <!-- SEO META TAGS -->
     <meta name="description" content="{% block description %}Bem-vindo à Adega 24 Horas Radio Tatuapé FM! Bebidas geladas, preços populares, entrega via WhatsApp. Cervejas, vinhos, destilados e refrigerantes com qualidade e economia no Tatuapé, São Paulo.{% endblock %}">
-    <meta name="keywords" content="adega, bebidas, cervejas geladas, vinhos, destilados, refrigerantes, tatuapé, são paulo, entrega, whatsapp, pix, 24 horas, preços populares, radio tatuape fm">
+    <meta name="keywords" content="adega, bebidas, cervejas geladas, vinhos, destilados, refrigerantes, tatuapé, são paulo, entrega, whatsapp, pix, 24 horas, preços populares, radio tatuape fm, vila regente feijo, adega 24 horas, cerveja, vinho tinto, vinho branco, cachaça, vodka, whisky, licores, energéticos, água, coca cola, pepsi, guaraná, cerveja artesanal, espumante, refrigerante diet, zero açúcar, bebida alcoólica, loja de bebidas, distribuidora, conveniência, delivery bebidas, ifood bebidas">
     <meta name="author" content="Julio Campos Machado - Like Look Solutions">
     <meta name="robots" content="index, follow">
     <meta name="language" content="pt-BR">
@@ -43,31 +43,31 @@
     
     <!-- OPEN GRAPH (Facebook, WhatsApp, etc) -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="{% block og_title %}Adega 24 Horas Radio Tatuapé FM - Bebidas Geladas e Preços Populares{% endblock %}">
+    <meta property="og:title" content="{% block og_title %}Adega 24 horas Rádio Tatuapé FM - Bebidas Geladas e Preços Populares{% endblock %}">
     <meta property="og:description" content="{% block og_description %}Sua adega de confiança no Tatuapé! Cervejas geladas, vinhos, destilados e refrigerantes com entrega via WhatsApp. Funcionamento 24 horas, preços que cabem no seu bolso!{% endblock %}">
     <meta property="og:url" content="{{ request.url }}">
-    <meta property="og:site_name" content="Adega Rádio Tatuapé FM">
-    <meta property="og:image" content="{% block og_image %}{{ url_for('static', filename='images/logo-adega-social.jpg', _external=True) }}{% endblock %}">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="Adega 24 horas Rádio Tatuapé FM">
+    <meta property="og:image" content="{% block og_image %}https://lh3.googleusercontent.com/p/AF1QipPEPRAhKcd_JWuwI4r9l9DJNuG8ZAiOETOorWmQ=s680-w680-h510-rw{% endblock %}">
+    <meta property="og:image:width" content="680">
+    <meta property="og:image:height" content="510">
     <meta property="og:locale" content="pt_BR">
     
     <!-- TWITTER CARDS -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="{% block twitter_title %}Adega 24 Horas Radio Tatuapé FM{% endblock %}">
+    <meta name="twitter:title" content="{% block twitter_title %}Adega 24 horas Rádio Tatuapé FM{% endblock %}">
     <meta name="twitter:description" content="{% block twitter_description %}Bebidas geladas, preços populares, entrega via WhatsApp no Tatuapé!{% endblock %}">
-    <meta name="twitter:image" content="{% block twitter_image %}{{ url_for('static', filename='images/logo-adega-social.jpg', _external=True) }}{% endblock %}">
+    <meta name="twitter:image" content="{% block twitter_image %}https://lh3.googleusercontent.com/p/AF1QipPEPRAhKcd_JWuwI4r9l9DJNuG8ZAiOETOorWmQ=s680-w680-h510-rw{% endblock %}">
     
     <!-- SCHEMA.ORG STRUCTURED DATA -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "LiquorStore",
-        "name": "Adega Rádio Tatuapé FM",
+        "name": "Adega 24 horas Rádio Tatuapé FM",
         "description": "Adega 24 horas com bebidas geladas e preços populares no Tatuapé",
         "url": "{{ request.url_root }}",
         "logo": "{{ url_for('static', filename='images/logo-adega.png', _external=True) }}",
-        "image": "{{ url_for('static', filename='images/logo-adega-social.jpg', _external=True) }}",
+        "image": "https://lh3.googleusercontent.com/p/AF1QipPEPRAhKcd_JWuwI4r9l9DJNuG8ZAiOETOorWmQ=s680-w680-h510-rw",
         "address": {
             "@type": "PostalAddress",
             "streetAddress": "Rua Dante Pellacani, 92",
@@ -98,9 +98,13 @@
     }
     </script>
     
+    <!-- FAVICON -->
+    <link rel="icon" type="image/png" href="https://lh3.googleusercontent.com/p/AF1QipPEPRAhKcd_JWuwI4r9l9DJNuG8ZAiOETOorWmQ=s680-w680-h510-rw">
+    <link rel="apple-touch-icon" href="https://lh3.googleusercontent.com/p/AF1QipPEPRAhKcd_JWuwI4r9l9DJNuG8ZAiOETOorWmQ=s680-w680-h510-rw">
+    
     <!-- BLOCO TITLE: Permite que páginas filhas definam títulos personalizados -->
     <title>
-        {% block title %}Adega Rádio Tatuapé FM - Bebidas 24 Horas | Entrega WhatsApp | Tatuapé SP{% endblock %}
+        {% block title %}Adega 24 horas Rádio Tatuapé FM - Bebidas 24 Horas | Entrega WhatsApp | Tatuapé SP{% endblock %}
     </title>
     
     <!-- BOOTSTRAP CSS: Framework para estilização e responsividade -->
