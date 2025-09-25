@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<!-- 
+    TEMPLATE BASE - base.html
+    ========================
+    
+    Este é o template base que será estendido por todas as outras páginas.
+    
+    Conceitos importantes:
+    - DOCTYPE html: Declara que é um documento HTML5
+    - lang="pt-BR": Define o idioma do documento para português brasileiro
+    - Bootstrap: Framework CSS para criar interfaces responsivas
+    - Jinja2 Templates: Sistema de templates do Flask
+-->
+<head>
+    <meta charset="UTF-8">
+    <!-- Charset UTF-8: Permite usar caracteres especiais como acentos -->
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Viewport: Torna o site responsivo em dispositivos móveis -->
+    
+    <!-- BLOCO TITLE: Permite que páginas filhas definam títulos personalizados -->
+    <title>
+        {% block title %}Adega Rádio Tatuapé FM{% endblock %}
+    </title>
+    
+    <!-- BOOTSTRAP CSS: Framework para estilização e responsividade -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- FONT AWESOME: Ícones vetoriais -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- CSS PERSONALIZADO -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- 
+        url_for(): Função do Flask que gera URLs automaticamente
+        'static': Nome da pasta de arquivos estáticos
+        filename: Nome do arquivo dentro da pasta static
+    -->
+    
+    {% block extra_head %}{% endblock %}
+    <!-- Bloco para adicionar CSS/JS específico de cada página -->
+</head>
+
+<body>
+    <!-- BARRA DE NAVEGAÇÃO (NAVBAR) -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <!-- 
+            Classes Bootstrap explicadas:
+            - navbar: Cria uma barra de navegação
+            - navbar-expand-lg: Expande menu em telas grandes
+            - navbar-dark: Tema escuro
+            - bg-dark: Background escuro
+            - sticky-top: Fica fixo no topo durante o scroll
+        -->
+        
+        <div class="container">
+            <!-- Container: Centraliza e limita a largura do conteúdo -->
+            
+            <!-- LOGO/MARCA -->
+            <a class="navbar-brand" href="{{ url_for('index') }}">
+                <i class="fas fa-wine-bottle me-2"></i>
+                <!-- Font Awesome: Ícone de garrafa de vinho -->
+                <!-- me-2: Margin end (direita) de 2 unidades -->
+                Adega Rádio Tatuapé FM
+            </a>
+            
+            <!-- BOTÃO PARA MENU MOBILE -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <!-- data-bs-*: Atributos do Bootstrap para JavaScript -->
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <!-- MENU DE NAVEGAÇÃO -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <!-- me-auto: Empurra os próximos itens para a direita -->
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('index') }}">
+                            <i class="fas fa-home me-1"></i>Início
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item dropdown">
+                        <!-- Dropdown: Menu suspenso para categorias -->
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-list me-1"></i>Categorias
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/?categoria=cerveja">🍺 Cervejas</a></li>
+                            <li><a class="dropdown-item" href="/?categoria=vinho">🍷 Vinhos</a></li>
+                            <li><a class="dropdown-item" href="/?categoria=destilados">🥃 Destilados</a></li>
+                            <li><a class="dropdown-item" href="/?categoria=refrigerante">🥤 Refrigerantes</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{{ url_for('index') }}">Ver Todos</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                
+                <!-- CARRINHO DE COMPRAS -->
+                <div class="navbar-nav">
+                    <a class="nav-link position-relative" href="{{ url_for('carrinho') }}">
+                        <!-- position-relative: Permite posicionar elementos filhos -->
+                        <i class="fas fa-shopping-cart me-1"></i>Carrinho
+                        
+                        <!-- BADGE DO CARRINHO: Mostra quantidade de itens -->
+                        {% if carrinho_total_itens > 0 %}
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="carrinho-badge">
+                            <!-- 
+                                Classes de posicionamento:
+                                - position-absolute: Posição absoluta
+                                - top-0: No topo
+                                - start-100: 100% à direita
+                                - translate-middle: Centraliza o elemento
+                            -->
+                            {{ carrinho_total_itens }}
+                        </span>
+                        {% endif %}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MENSAGENS FLASH -->
+    <div class="container mt-3">
+        <!-- 
+            Flash Messages: Sistema do Flask para mostrar mensagens temporárias
+            Usado para feedback ao usuário (sucesso, erro, aviso, etc.)
+        -->
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ 'success' if category == 'success' else 'danger' if category == 'error' else 'warning' if category == 'warning' else 'info' }} alert-dismissible fade show">
+                        <!-- 
+                            Alert Bootstrap com classes condicionais:
+                            - alert-dismissible: Permite fechar a mensagem
+                            - fade show: Animação de entrada
+                        -->
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="container my-4">
+        <!-- 
+            my-4: Margin vertical (top e bottom) de 4 unidades
+            Este é onde o conteúdo específico de cada página será inserido
+        -->
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- RODAPÉ -->
+    <footer class="bg-dark text-light py-4 mt-auto">
+        <!-- 
+            py-4: Padding vertical de 4 unidades
+            mt-auto: Margin-top automático (empurra para baixo)
+        -->
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5><i class="fas fa-wine-bottle me-2"></i>Adega Rádio Tatuapé FM</h5>
+                    <p class="mb-0">Sua adega 24 horas de confiança!</p>
+                    <p class="mb-0">
+                        <i class="fas fa-clock me-1"></i>
+                        Funcionamento: 24 horas por dia
+                    </p>
+                </div>
+                
+                <div class="col-md-6">
+                    <h5>Contato</h5>
+                    <p class="mb-1">
+                        <i class="fas fa-phone me-2"></i>
+                        <a href="tel:+5511970603441" class="text-light text-decoration-none">
+                            (11) 97060-3441
+                        </a>
+                    </p>
+                    <p class="mb-1">
+                        <i class="fas fa-envelope me-2"></i>
+                        <a href="mailto:radiotatuapefm@gmail.com" class="text-light text-decoration-none">
+                            radiotatuapefm@gmail.com
+                        </a>
+                    </p>
+                    <p class="mb-0">
+                        <i class="fas fa-map-marker-alt me-2"></i>
+                        Vila Regente Feijó - São Paulo/SP
+                    </p>
+                </div>
+            </div>
+            
+            <hr class="my-3">
+            <!-- hr: Linha horizontal separadora -->
+            
+            <div class="text-center">
+                <p class="mb-0">
+                    &copy; 2024 Adega Rádio Tatuapé FM - Todos os direitos reservados
+                </p>
+                <small class="text-muted">
+                    <!-- text-muted: Cor de texto mais clara -->
+                    Desenvolvido com Flask e Bootstrap
+                </small>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS JAVASCRIPT -->
+    <!-- 
+        Scripts são colocados no final do body para otimização:
+        - A página carrega mais rápido
+        - Garante que o DOM esteja pronto antes dos scripts
+    -->
+    
+    <!-- BOOTSTRAP JS: Necessário para componentes interativos -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- JAVASCRIPT PERSONALIZADO -->
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    
+    <!-- BLOCO PARA SCRIPTS ESPECÍFICOS DE CADA PÁGINA -->
+    {% block extra_scripts %}{% endblock %}
+    
+    <!-- SCRIPT PARA ATUALIZAR BADGE DO CARRINHO VIA AJAX -->
+    <script>
+        // Função JavaScript para atualizar o badge do carrinho
+        // Este é um exemplo de JavaScript vanilla (sem jQuery)
+        
+        function atualizarBadgeCarrinho(totalItens) {
+            // Busca o elemento do badge pelo ID
+            const badge = document.getElementById('carrinho-badge');
+            
+            if (totalItens > 0) {
+                if (badge) {
+                    // Se o badge existe, atualiza o número
+                    badge.textContent = totalItens;
+                } else {
+                    // Se não existe, cria um novo badge
+                    const carrinhoLink = document.querySelector('a[href*="carrinho"]');
+                    const novoBadge = document.createElement('span');
+                    novoBadge.className = 'position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger';
+                    novoBadge.id = 'carrinho-badge';
+                    novoBadge.textContent = totalItens;
+                    carrinhoLink.appendChild(novoBadge);
+                }
+            } else {
+                // Remove o badge se não há itens
+                if (badge) {
+                    badge.remove();
+                }
+            }
+        }
+        
+        // Event listener que executa quando a página carrega
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Página carregada! Sistema da adega pronto.');
+            
+            // Aqui podemos adicionar mais funcionalidades JavaScript
+            // que devem executar quando a página carrega
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+# requirements.txt
+# Este arquivo contém todas as dependências necessárias para o projeto
+# Para instalar, execute: pip install -r requirements.txt
+
+# Flask - Framework web principal
+Flask==2.3.3
+
+# Flask-SQLAlchemy - ORM para trabalhar com banco de dados
+Flask-SQLAlchemy==3.0.5
+
+# Flask-Migrate - Para migrações de banco de dados
+Flask-Migrate==4.0.5
+
+# Flask-WTF - Para formulários seguros
+Flask-WTF==1.1.1
+
+# WTForms - Biblioteca para criação de formulários
+WTForms==3.0.1
+
+# Requests - Para fazer requisições HTTP (útil para APIs)
+requests==2.31.0
+
+# Python-dotenv - Para variáveis de ambiente
+python-dotenv==1.0.0
+
+# Werkzeug - Utilitários WSGI (usado pelo Flask)
+Werkzeug==2.3.7
+
+# Jinja2 - Motor de templates (usado pelo Flask)
+Jinja2==3.1.2
+
+# MarkupSafe - Para segurança em templates
+MarkupSafe==2.1.3

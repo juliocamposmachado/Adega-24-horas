@@ -1,0 +1,510 @@
+<!--
+    TEMPLATE CARRINHO - carrinho.html
+    =================================
+    
+    Página que exibe os itens do carrinho de compras do usuário
+    
+    Conceitos abordados:
+    - Tabelas responsivas Bootstrap
+    - Manipulação de dados via AJAX
+    - Cálculo dinâmico de totais
+    - Botões de ação (remover, atualizar quantidade)
+    - Formatação de moeda
+-->
+
+{% extends "base.html" %}
+
+{% block title %}Carrinho - Adega Rádio Tatuapé FM{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <!-- TÍTULO DA PÁGINA -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>
+                <i class="fas fa-shopping-cart me-2 text-primary"></i>
+                Seu Carrinho
+            </h2>
+            <a href="{{ url_for('index') }}" class="btn btn-outline-primary">
+                <i class="fas fa-arrow-left me-1"></i>
+                Continuar Comprando
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- VERIFICAÇÃO SE O CARRINHO TEM ITENS -->
+{% if carrinho %}
+    <!-- TABELA DE ITENS DO CARRINHO -->
+    <div class="card">
+        <div class="card-header bg-light">
+            <h5 class="mb-0">
+                <i class="fas fa-list me-2"></i>
+                Itens do Pedido ({{ carrinho|length }} {{ 'item' if carrinho|length == 1 else 'itens' }})
+            </h5>
+            <!--
+                |length: Filtro Jinja2 que retorna o tamanho da lista
+                Conditional em Jinja2: 'item' if condition else 'itens'
+            -->
+        </div>
+        
+        <div class="card-body p-0">
+            <!-- TABELA RESPONSIVA -->
+            <div class="table-responsive">
+                <!--
+                    table-responsive: Torna a tabela responsiva
+                    Em telas pequenas, adiciona scroll horizontal
+                -->
+                <table class="table table-hover mb-0" id="carrinho-table">
+                    <!-- 
+                        table-hover: Efeito hover nas linhas
+                        mb-0: Remove margin bottom padrão
+                    -->
+                    
+                    <!-- CABEÇALHO DA TABELA -->
+                    <thead class="table-light">
+                        <tr>
+                            <th>Produto</th>
+                            <th class="text-center">Preço Unit.</th>
+                            <th class="text-center">Quantidade</th>
+                            <th class="text-center">Subtotal</th>
+                            <th class="text-center">Ações</th>
+                        </tr>
+                    </thead>
+                    
+                    <!-- CORPO DA TABELA -->
+                    <tbody>
+                        {% for item in carrinho %}
+                        <tr data-produto-id="{{ item.produto_id }}" class="carrinho-item">
+                            <!--
+                                data-produto-id: Atributo para identificar o item
+                                carrinho-item: Classe para estilização e JavaScript
+                            -->
+                            
+                            <!-- COLUNA DO PRODUTO -->
+                            <td class="align-middle">
+                                <!-- align-middle: Alinhamento vertical central -->
+                                <div class="d-flex align-items-center">
+                                    <!-- Imagem do produto (miniatura) -->
+                                    <img src="{{ item.imagem_url or '/static/images/default-product.jpg' }}" 
+                                         alt="{{ item.nome }}" 
+                                         class="rounded me-3"
+                                         style="width: 60px; height: 60px; object-fit: cover;">
+                                    <!--
+                                        object-fit: cover: Mantém proporção da imagem
+                                        style inline: Para dimensões específicas
+                                    -->
+                                    
+                                    <!-- Nome do produto -->
+                                    <div>
+                                        <h6 class="mb-0 fw-bold">{{ item.nome }}</h6>
+                                        <small class="text-muted">
+                                            ID: #{{ item.produto_id }}
+                                        </small>
+                                    </div>
+                                </div>
+                            </td>
+                            
+                            <!-- COLUNA PREÇO UNITÁRIO -->
+                            <td class="text-center align-middle">
+                                <span class="fw-bold text-success">
+                                    {{ item.preco|currency }}
+                                </span>
+                            </td>
+                            
+                            <!-- COLUNA QUANTIDADE -->
+                            <td class="text-center align-middle">
+                                <div class="input-group input-group-sm" style="max-width: 120px; margin: 0 auto;">
+                                    <!-- 
+                                        input-group-sm: Versão pequena do input group
+                                        max-width: Limita largura do controle
+                                        margin: 0 auto: Centraliza horizontalmente
+                                    -->
+                                    
+                                    <!-- Botão diminuir quantidade -->
+                                    <button class="btn btn-outline-secondary qty-btn-decrease" 
+                                            type="button"
+                                            data-produto-id="{{ item.produto_id }}">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                    
+                                    <!-- Input da quantidade -->
+                                    <input type="number" 
+                                           class="form-control text-center quantidade-input" 
+                                           value="{{ item.quantidade }}" 
+                                           min="1" 
+                                           data-produto-id="{{ item.produto_id }}"
+                                           data-preco="{{ item.preco }}">
+                                    
+                                    <!-- Botão aumentar quantidade -->
+                                    <button class="btn btn-outline-secondary qty-btn-increase" 
+                                            type="button"
+                                            data-produto-id="{{ item.produto_id }}">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                            </td>
+                            
+                            <!-- COLUNA SUBTOTAL -->
+                            <td class="text-center align-middle">
+                                <span class="fw-bold text-primary subtotal" 
+                                      data-produto-id="{{ item.produto_id }}">
+                                    {{ item.subtotal|currency }}
+                                </span>
+                            </td>
+                            
+                            <!-- COLUNA AÇÕES -->
+                            <td class="text-center align-middle">
+                                <!-- Botão remover item -->
+                                <button class="btn btn-outline-danger btn-sm remover-item" 
+                                        data-produto-id="{{ item.produto_id }}"
+                                        data-nome="{{ item.nome }}">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <!-- RESUMO DO PEDIDO -->
+    <div class="row mt-4">
+        <div class="col-md-8">
+            <!-- CARD COM INFORMAÇÕES ADICIONAIS -->
+            <div class="card">
+                <div class="card-header">
+                    <h6 class="mb-0">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Informações do Pedido
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="mb-2">
+                                <i class="fas fa-truck text-primary me-2"></i>
+                                <strong>Entrega:</strong> Via WhatsApp
+                            </p>
+                            <p class="mb-2">
+                                <i class="fas fa-clock text-warning me-2"></i>
+                                <strong>Tempo:</strong> Confirmar com vendedor
+                            </p>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="mb-2">
+                                <i class="fas fa-money-bill text-success me-2"></i>
+                                <strong>Pagamento:</strong> PIX
+                            </p>
+                            <p class="mb-2">
+                                <i class="fas fa-phone text-info me-2"></i>
+                                <strong>Contato:</strong> (11) 97060-3441
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <!-- CARD RESUMO FINANCEIRO -->
+            <div class="card border-success">
+                <div class="card-header bg-success text-white">
+                    <h6 class="mb-0">
+                        <i class="fas fa-calculator me-2"></i>
+                        Resumo do Pedido
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <!-- Total de itens -->
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Total de itens:</span>
+                        <span id="total-itens">{{ carrinho|sum(attribute='quantidade') }}</span>
+                        <!--
+                            |sum(attribute='quantidade'): Soma o atributo quantidade de todos os itens
+                            Filtro avançado do Jinja2
+                        -->
+                    </div>
+                    
+                    <!-- Valor total -->
+                    <hr class="my-3">
+                    <div class="d-flex justify-content-between">
+                        <strong class="h5">Total:</strong>
+                        <strong class="h5 text-success" id="valor-total">
+                            {{ total|currency }}
+                        </strong>
+                    </div>
+                    
+                    <!-- Botão finalizar pedido -->
+                    <div class="d-grid mt-4">
+                        <!-- d-grid: Faz o botão ocupar toda a largura -->
+                        <a href="{{ url_for('checkout') }}" class="btn btn-success btn-lg">
+                            <i class="fas fa-whatsapp me-2"></i>
+                            Finalizar Pedido
+                        </a>
+                    </div>
+                    
+                    <!-- Botão limpar carrinho -->
+                    <div class="d-grid mt-2">
+                        <button class="btn btn-outline-danger btn-sm" id="limpar-carrinho">
+                            <i class="fas fa-trash me-2"></i>
+                            Limpar Carrinho
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+{% else %}
+    <!-- CARRINHO VAZIO -->
+    <div class="text-center py-5">
+        <div class="mb-4">
+            <!-- Ícone grande de carrinho vazio -->
+            <i class="fas fa-shopping-cart text-muted" style="font-size: 6rem;"></i>
+        </div>
+        
+        <h3 class="text-muted mb-3">Seu carrinho está vazio</h3>
+        
+        <p class="text-muted mb-4">
+            Adicione alguns produtos deliciosos ao seu carrinho para continuar!
+        </p>
+        
+        <!-- Botão para voltar às compras -->
+        <a href="{{ url_for('index') }}" class="btn btn-primary btn-lg">
+            <i class="fas fa-shopping-bag me-2"></i>
+            Começar a Comprar
+        </a>
+    </div>
+{% endif %}
+{% endblock %}
+
+<!-- SCRIPTS ESPECÍFICOS DA PÁGINA DO CARRINHO -->
+{% block extra_scripts %}
+<script>
+    // JavaScript para funcionalidades do carrinho
+    // ===========================================
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('Página do carrinho carregada');
+        
+        // Configurar funcionalidades apenas se há itens no carrinho
+        {% if carrinho %}
+            setupQuantityButtons();
+            setupRemoveButtons();
+            setupClearCartButton();
+            setupQuantityInputs();
+        {% endif %}
+    });
+    
+    function setupQuantityButtons() {
+        // Botões de aumentar quantidade
+        document.querySelectorAll('.qty-btn-increase').forEach(button => {
+            button.addEventListener('click', function() {
+                const produtoId = this.dataset.produtoId;
+                const input = document.querySelector(`input[data-produto-id="${produtoId}"]`);
+                const novaQuantidade = parseInt(input.value) + 1;
+                
+                atualizarQuantidade(produtoId, novaQuantidade, input);
+            });
+        });
+        
+        // Botões de diminuir quantidade
+        document.querySelectorAll('.qty-btn-decrease').forEach(button => {
+            button.addEventListener('click', function() {
+                const produtoId = this.dataset.produtoId;
+                const input = document.querySelector(`input[data-produto-id="${produtoId}"]`);
+                const quantidadeAtual = parseInt(input.value);
+                
+                if (quantidadeAtual > 1) {
+                    const novaQuantidade = quantidadeAtual - 1;
+                    atualizarQuantidade(produtoId, novaQuantidade, input);
+                }
+            });
+        });
+    }
+    
+    function setupQuantityInputs() {
+        // Event listeners para inputs de quantidade
+        document.querySelectorAll('.quantidade-input').forEach(input => {
+            // Atualiza quando o usuário digita diretamente
+            input.addEventListener('change', function() {
+                const produtoId = this.dataset.produtoId;
+                const novaQuantidade = parseInt(this.value);
+                
+                if (novaQuantidade >= 1) {
+                    atualizarQuantidade(produtoId, novaQuantidade, this);
+                } else {
+                    this.value = 1; // Reset para 1 se valor inválido
+                }
+            });
+            
+            // Previne valores negativos durante digitação
+            input.addEventListener('input', function() {
+                if (this.value < 1) {
+                    this.value = 1;
+                }
+            });
+        });
+    }
+    
+    function atualizarQuantidade(produtoId, novaQuantidade, inputElement) {
+        // Mostra indicador de carregamento
+        inputElement.style.opacity = '0.5';
+        
+        // Faz requisição AJAX para atualizar quantidade
+        fetch('/atualizar_quantidade', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                produto_id: parseInt(produtoId),
+                quantidade: novaQuantidade
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Atualiza o valor do input
+                inputElement.value = novaQuantidade;
+                
+                // Recalcula subtotal do item
+                const preco = parseFloat(inputElement.dataset.preco);
+                const novoSubtotal = novaQuantidade * preco;
+                
+                // Atualiza subtotal na interface
+                const subtotalElement = document.querySelector(`span.subtotal[data-produto-id="${produtoId}"]`);
+                subtotalElement.textContent = formatarMoeda(novoSubtotal);
+                
+                // Atualiza total geral
+                atualizarTotalGeral(data.novo_total);
+                
+                // Atualiza badge do carrinho na navbar
+                const totalItens = calcularTotalItens();
+                atualizarBadgeCarrinho(totalItens);
+                
+                // Feedback visual
+                showToast('Quantidade atualizada!', 'success');
+                
+            } else {
+                // Reverte valor em caso de erro
+                showToast(data.error || 'Erro ao atualizar quantidade', 'error');
+            }
+        })
+        .catch(error => {
+            console.error('Erro:', error);
+            showToast('Erro de conexão', 'error');
+        })
+        .finally(() => {
+            // Remove indicador de carregamento
+            inputElement.style.opacity = '1';
+        });
+    }
+    
+    function setupRemoveButtons() {
+        document.querySelectorAll('.remover-item').forEach(button => {
+            button.addEventListener('click', function() {
+                const produtoId = this.dataset.produtoId;
+                const nomeProduto = this.dataset.nome;
+                
+                // Confirmação antes de remover
+                if (confirm(`Tem certeza que deseja remover "${nomeProduto}" do carrinho?`)) {
+                    removerItem(produtoId);
+                }
+            });
+        });
+    }
+    
+    function removerItem(produtoId) {
+        // Faz requisição para remover item
+        window.location.href = `/remover_carrinho/${produtoId}`;
+    }
+    
+    function setupClearCartButton() {
+        const clearButton = document.getElementById('limpar-carrinho');
+        if (clearButton) {
+            clearButton.addEventListener('click', function() {
+                if (confirm('Tem certeza que deseja limpar todo o carrinho?')) {
+                    // Implementar lógica para limpar carrinho
+                    // Por enquanto, vamos redirecionar para uma URL que limpe a sessão
+                    limparCarrinho();
+                }
+            });
+        }
+    }
+    
+    function limparCarrinho() {
+        // Remove cada item individualmente
+        // (Pode ser implementado uma rota específica para limpar tudo)
+        const itens = document.querySelectorAll('.carrinho-item');
+        if (itens.length > 0) {
+            // Por simplicidade, vamos recarregar a página após limpar a sessão
+            fetch('/limpar_carrinho', { method: 'POST' })
+            .then(() => {
+                location.reload();
+            })
+            .catch(() => {
+                // Fallback: redirecionar para index
+                window.location.href = '/';
+            });
+        }
+    }
+    
+    // FUNÇÕES AUXILIARES
+    // ==================
+    
+    function calcularTotalItens() {
+        // Calcula total de itens no carrinho
+        let total = 0;
+        document.querySelectorAll('.quantidade-input').forEach(input => {
+            total += parseInt(input.value);
+        });
+        return total;
+    }
+    
+    function atualizarTotalGeral(novoTotal) {
+        // Atualiza o valor total na interface
+        const totalElement = document.getElementById('valor-total');
+        if (totalElement) {
+            totalElement.textContent = formatarMoeda(novoTotal);
+        }
+        
+        // Atualiza total de itens
+        const totalItens = calcularTotalItens();
+        const totalItensElement = document.getElementById('total-itens');
+        if (totalItensElement) {
+            totalItensElement.textContent = totalItens;
+        }
+    }
+    
+    function formatarMoeda(valor) {
+        // Formata valor como moeda brasileira
+        return new Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL'
+        }).format(valor);
+    }
+    
+    // Reutiliza função do template base para mostrar toasts
+    function showToast(message, type = 'info') {
+        const toast = document.createElement('div');
+        toast.className = `alert alert-${type === 'success' ? 'success' : 'danger'} position-fixed`;
+        toast.style.cssText = 'top: 20px; right: 20px; z-index: 1050; min-width: 300px;';
+        toast.innerHTML = `
+            ${message}
+            <button type="button" class="btn-close" onclick="this.parentElement.remove()"></button>
+        `;
+        
+        document.body.appendChild(toast);
+        
+        setTimeout(() => {
+            if (toast.parentNode) {
+                toast.remove();
+            }
+        }, 3000);
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,483 @@
+<!-- 
+    TEMPLATE INDEX - index.html  
+    ============================
+    
+    Página inicial que exibe o catálogo de produtos da adega
+    
+    Conceitos abordados:
+    - Herança de templates (extends)
+    - Loops em templates (for)
+    - Condicionais em templates (if)
+    - Formulários
+    - Cards Bootstrap
+    - Grid System Bootstrap
+    - JavaScript/AJAX
+-->
+
+{% extends "base.html" %}
+<!-- 
+    extends: Herda tudo do template base.html
+    Permite reutilizar estrutura, CSS e JavaScript
+-->
+
+{% block title %}Catálogo - Adega Rádio Tatuapé FM{% endblock %}
+<!-- Substitui o título padrão do template base -->
+
+{% block content %}
+<!-- HERO SECTION: Seção de destaque principal -->
+<section class="hero-section bg-primary text-white text-center py-5 mb-5 rounded">
+    <!-- 
+        Classes explicadas:
+        - bg-primary: Background azul do Bootstrap
+        - text-center: Centraliza o texto
+        - py-5: Padding vertical grande
+        - mb-5: Margin bottom grande
+        - rounded: Bordas arredondadas
+    -->
+    <div class="container">
+        <h1 class="display-4 fw-bold">
+            <!-- display-4: Título grande, fw-bold: Fonte em negrito -->
+            <i class="fas fa-wine-bottle me-3"></i>
+            Adega Rádio Tatuapé FM
+        </h1>
+        <p class="lead mb-4">
+            <!-- lead: Texto destacado/maior -->
+            Sua adega 24 horas! Bebidas geladas, entrega rápida.
+        </p>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="row text-start">
+                    <!-- text-start: Alinha texto à esquerda -->
+                    <div class="col-md-6">
+                        <p class="mb-2">
+                            <i class="fas fa-check-circle me-2 text-success"></i>
+                            Entrega via WhatsApp
+                        </p>
+                        <p class="mb-2">
+                            <i class="fas fa-check-circle me-2 text-success"></i>
+                            Pagamento via PIX
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="mb-2">
+                            <i class="fas fa-check-circle me-2 text-success"></i>
+                            Funcionamento 24h
+                        </p>
+                        <p class="mb-2">
+                            <i class="fas fa-check-circle me-2 text-success"></i>
+                            Produtos sempre gelados
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FILTROS DE CATEGORIA -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <!-- Card: Container com sombra e bordas -->
+            <div class="card-body">
+                <h5 class="card-title">
+                    <i class="fas fa-filter me-2"></i>Filtrar por categoria
+                </h5>
+                <div class="btn-group flex-wrap" role="group">
+                    <!-- 
+                        btn-group: Agrupa botões
+                        flex-wrap: Permite quebra de linha em telas pequenas
+                    -->
+                    <a href="{{ url_for('index') }}" class="btn btn-outline-primary">
+                        <i class="fas fa-th-large me-1"></i>Todos
+                    </a>
+                    <a href="?categoria=cerveja" class="btn btn-outline-primary">
+                        🍺 Cervejas
+                    </a>
+                    <a href="?categoria=vinho" class="btn btn-outline-primary">
+                        🍷 Vinhos
+                    </a>
+                    <a href="?categoria=destilados" class="btn btn-outline-primary">
+                        🥃 Destilados
+                    </a>
+                    <a href="?categoria=refrigerante" class="btn btn-outline-primary">
+                        🥤 Refrigerantes
+                    </a>
+                    <a href="?categoria=agua" class="btn btn-outline-primary">
+                        💧 Água
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CATÁLOGO DE PRODUTOS -->
+<div class="row">
+    <div class="col-12">
+        <h2 class="mb-4">
+            <i class="fas fa-shopping-bag me-2"></i>Nossos Produtos
+        </h2>
+    </div>
+</div>
+
+<!-- VERIFICAÇÃO SE HÁ PRODUTOS -->
+{% if produtos %}
+    <!-- Grid de Produtos usando Bootstrap -->
+    <div class="row" id="produtos-grid">
+        <!-- 
+            Bootstrap Grid System:
+            - row: Cria uma linha
+            - col-*: Define colunas responsivas
+            - lg/md/sm: Breakpoints para diferentes tamanhos de tela
+        -->
+        
+        {% for produto in produtos %}
+        <!-- 
+            Loop Jinja2: Itera sobre cada produto
+            produto é uma instância do modelo Produto do SQLAlchemy
+        -->
+        <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+            <!-- 
+                Colunas responsivas:
+                - col-lg-4: 3 produtos por linha em telas grandes
+                - col-md-6: 2 produtos por linha em tablets
+                - col-sm-12: 1 produto por linha em celulares
+                - mb-4: Margin bottom entre produtos
+            -->
+            
+            <!-- CARD DO PRODUTO -->
+            <div class="card h-100 produto-card">
+                <!-- 
+                    h-100: Altura 100% (todos os cards ficam da mesma altura)
+                    produto-card: Classe personalizada para CSS
+                -->
+                
+                <!-- IMAGEM DO PRODUTO -->
+                <div class="card-img-wrapper">
+                    <img src="{{ produto.imagem_url or '/static/images/default-product.jpg' }}" 
+                         class="card-img-top" 
+                         alt="{{ produto.nome }}"
+                         loading="lazy">
+                    <!-- 
+                        src: URL da imagem (usa imagem padrão se não houver)
+                        loading="lazy": Carrega imagem apenas quando necessário (otimização)
+                        alt: Texto alternativo para acessibilidade
+                    -->
+                    
+                    <!-- BADGE DE CATEGORIA -->
+                    <span class="position-absolute top-0 end-0 m-2">
+                        <span class="badge bg-secondary">
+                            {{ produto.categoria.title() }}
+                            <!-- .title(): Deixa primeira letra maiúscula -->
+                        </span>
+                    </span>
+                    
+                    <!-- BADGE DE ESTOQUE (se baixo) -->
+                    {% if produto.estoque <= 5 %}
+                    <span class="position-absolute bottom-0 start-0 m-2">
+                        <span class="badge bg-warning text-dark">
+                            Últimas unidades!
+                        </span>
+                    </span>
+                    {% endif %}
+                </div>
+                
+                <!-- CORPO DO CARD -->
+                <div class="card-body d-flex flex-column">
+                    <!-- 
+                        d-flex flex-column: Layout flexbox vertical
+                        Permite que o botão fique sempre no final do card
+                    -->
+                    
+                    <!-- NOME DO PRODUTO -->
+                    <h5 class="card-title">{{ produto.nome }}</h5>
+                    
+                    <!-- DESCRIÇÃO -->
+                    <p class="card-text text-muted flex-grow-1">
+                        <!-- 
+                            flex-grow-1: Expande para ocupar espaço disponível
+                            Empurra o preço e botão para baixo
+                        -->
+                        {{ produto.descricao[:100] }}...
+                        <!-- [:100]: Limita descrição a 100 caracteres -->
+                    </p>
+                    
+                    <!-- PREÇO -->
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="h4 text-success mb-0">
+                            {{ produto.preco|currency }}
+                            <!-- 
+                                |currency: Filtro personalizado definido no app.py
+                                Formata o preço como moeda brasileira
+                            -->
+                        </span>
+                        <small class="text-muted">
+                            Estoque: {{ produto.estoque }}
+                        </small>
+                    </div>
+                    
+                    <!-- FORMULÁRIO PARA ADICIONAR AO CARRINHO -->
+                    <form class="add-to-cart-form" data-produto-id="{{ produto.id }}">
+                        <!-- 
+                            data-produto-id: Atributo personalizado para JavaScript
+                            Permite identificar o produto via AJAX
+                        -->
+                        
+                        <div class="row g-2 mb-3">
+                            <!-- g-2: Gap (espaçamento) pequeno entre colunas -->
+                            
+                            <div class="col-8">
+                                <div class="input-group">
+                                    <!-- input-group: Agrupa elementos de input -->
+                                    
+                                    <button class="btn btn-outline-secondary btn-sm qty-decrease" 
+                                            type="button"
+                                            data-action="decrease">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                    
+                                    <input type="number" 
+                                           class="form-control form-control-sm text-center quantidade-input" 
+                                           name="quantidade" 
+                                           value="1" 
+                                           min="1" 
+                                           max="{{ produto.estoque }}">
+                                    
+                                    <button class="btn btn-outline-secondary btn-sm qty-increase" 
+                                            type="button"
+                                            data-action="increase">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="col-4">
+                                <button type="submit" 
+                                        class="btn btn-primary btn-sm w-100"
+                                        {% if produto.estoque == 0 %}disabled{% endif %}>
+                                    <!-- 
+                                        Botão desabilitado se não há estoque
+                                        w-100: Width 100% (botão ocupa toda largura)
+                                    -->
+                                    <i class="fas fa-cart-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- INPUT HIDDEN COM ID DO PRODUTO -->
+                        <input type="hidden" name="produto_id" value="{{ produto.id }}">
+                        <!-- 
+                            hidden: Campo invisível que envia o ID do produto
+                            Necessário para identificar qual produto adicionar
+                        -->
+                    </form>
+                    
+                    <!-- BOTÃO VER DETALHES -->
+                    <a href="{{ url_for('detalhes_produto', produto_id=produto.id) }}" 
+                       class="btn btn-outline-info btn-sm">
+                        <i class="fas fa-info-circle me-1"></i>Ver detalhes
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+{% else %}
+    <!-- MENSAGEM QUANDO NÃO HÁ PRODUTOS -->
+    <div class="col-12">
+        <div class="alert alert-info text-center">
+            <i class="fas fa-info-circle me-2"></i>
+            <strong>Nenhum produto encontrado!</strong>
+            <p class="mb-0 mt-2">
+                Verifique os filtros ou entre em contato conosco.
+            </p>
+        </div>
+    </div>
+{% endif %}
+
+<!-- SEÇÃO DE CONTATO/INFORMAÇÕES -->
+<section class="mt-5 pt-5 border-top">
+    <!-- border-top: Linha superior separadora -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card bg-light">
+                <div class="card-body text-center">
+                    <i class="fas fa-whatsapp text-success fa-3x mb-3"></i>
+                    <h5>Faça seu pedido!</h5>
+                    <p class="text-muted">
+                        Adicione produtos ao carrinho e envie via WhatsApp
+                    </p>
+                    <a href="{{ url_for('carrinho') }}" class="btn btn-success">
+                        <i class="fas fa-shopping-cart me-2"></i>
+                        Ver Carrinho ({{ carrinho_total_itens or 0 }})
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="card bg-light">
+                <div class="card-body text-center">
+                    <i class="fas fa-money-check text-primary fa-3x mb-3"></i>
+                    <h5>Pagamento PIX</h5>
+                    <p class="text-muted">
+                        Pagamento rápido e seguro via PIX
+                    </p>
+                    <strong>radiotatuapefm@gmail.com</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+<!-- SCRIPTS ESPECÍFICOS DESTA PÁGINA -->
+{% block extra_scripts %}
+<script>
+    // JavaScript específico da página inicial
+    // =======================================
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('Página inicial carregada. Inicializando funcionalidades...');
+        
+        // FUNCIONALIDADE: Botões +/- para quantidade
+        // ==========================================
+        setupQuantityButtons();
+        
+        // FUNCIONALIDADE: Adicionar ao carrinho via AJAX
+        // ==============================================
+        setupAddToCartForms();
+        
+        // FUNCIONALIDADE: Animação nos cards
+        // =================================
+        setupCardAnimations();
+    });
+    
+    function setupQuantityButtons() {
+        // Busca todos os botões de quantidade
+        const decreaseButtons = document.querySelectorAll('.qty-decrease');
+        const increaseButtons = document.querySelectorAll('.qty-increase');
+        
+        // Event listeners para botões de diminuir
+        decreaseButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const input = this.parentNode.querySelector('.quantidade-input');
+                let value = parseInt(input.value);
+                
+                if (value > 1) {  // Mínimo 1
+                    input.value = value - 1;
+                }
+            });
+        });
+        
+        // Event listeners para botões de aumentar
+        increaseButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const input = this.parentNode.querySelector('.quantidade-input');
+                const max = parseInt(input.getAttribute('max'));
+                let value = parseInt(input.value);
+                
+                if (value < max) {  // Respeitando estoque máximo
+                    input.value = value + 1;
+                }
+            });
+        });
+    }
+    
+    function setupAddToCartForms() {
+        // Busca todos os formulários de adicionar ao carrinho
+        const forms = document.querySelectorAll('.add-to-cart-form');
+        
+        forms.forEach(form => {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();  // Previne envio tradicional do formulário
+                
+                // Coleta dados do formulário
+                const produtoId = this.dataset.produtoId;
+                const quantidade = this.querySelector('input[name="quantidade"]').value;
+                const submitButton = this.querySelector('button[type="submit"]');
+                
+                // Desabilita botão durante envio
+                submitButton.disabled = true;
+                submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+                
+                // Faz requisição AJAX
+                fetch('/adicionar_carrinho', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        produto_id: parseInt(produtoId),
+                        quantidade: parseInt(quantidade)
+                    })
+                })
+                .then(response => response.json())  // Converte resposta para JSON
+                .then(data => {
+                    if (data.success) {
+                        // Atualiza badge do carrinho
+                        atualizarBadgeCarrinho(data.total_itens);
+                        
+                        // Mostra feedback visual
+                        showToast('Produto adicionado ao carrinho!', 'success');
+                        
+                        // Reset do formulário
+                        this.querySelector('input[name="quantidade"]').value = 1;
+                    } else {
+                        showToast(data.error || 'Erro ao adicionar produto', 'error');
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+                    showToast('Erro de conexão', 'error');
+                })
+                .finally(() => {
+                    // Reabilita botão
+                    submitButton.disabled = false;
+                    submitButton.innerHTML = '<i class="fas fa-cart-plus"></i>';
+                });
+            });
+        });
+    }
+    
+    function setupCardAnimations() {
+        // Animação sutil ao passar mouse nos cards
+        const cards = document.querySelectorAll('.produto-card');
+        
+        cards.forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px)';
+                this.style.transition = 'transform 0.3s ease';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+    }
+    
+    // Função para mostrar notificações toast
+    function showToast(message, type = 'info') {
+        // Cria elemento toast
+        const toast = document.createElement('div');
+        toast.className = `alert alert-${type === 'success' ? 'success' : 'danger'} position-fixed`;
+        toast.style.cssText = 'top: 20px; right: 20px; z-index: 1050; min-width: 300px;';
+        toast.innerHTML = `
+            ${message}
+            <button type="button" class="btn-close" onclick="this.parentElement.remove()"></button>
+        `;
+        
+        // Adiciona ao DOM
+        document.body.appendChild(toast);
+        
+        // Remove automaticamente após 3 segundos
+        setTimeout(() => {
+            if (toast.parentNode) {
+                toast.remove();
+            }
+        }, 3000);
+    }
+</script>
+{% endblock %}

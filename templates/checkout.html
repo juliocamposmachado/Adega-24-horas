@@ -1,0 +1,517 @@
+<!--
+    TEMPLATE CHECKOUT - checkout.html
+    =================================
+    
+    Página de finalização do pedido onde o cliente informa seus dados
+    
+    Conceitos abordados:
+    - Formulários Bootstrap
+    - Validação client-side
+    - Resumo do pedido
+    - Informações de pagamento PIX
+    - Preparação para envio via WhatsApp
+-->
+
+{% extends "base.html" %}
+
+{% block title %}Finalizar Pedido - Adega Rádio Tatuapé FM{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <!-- TÍTULO E BREADCRUMB -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h2>
+                    <i class="fas fa-clipboard-check me-2 text-success"></i>
+                    Finalizar Pedido
+                </h2>
+                <nav aria-label="breadcrumb">
+                    <!-- Breadcrumb: Navegação hierárquica -->
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="{{ url_for('index') }}">Início</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="{{ url_for('carrinho') }}">Carrinho</a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">
+                            Checkout
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+            <a href="{{ url_for('carrinho') }}" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left me-1"></i>
+                Voltar ao Carrinho
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- COLUNA DO FORMULÁRIO (ESQUERDA) -->
+    <div class="col-lg-8">
+        <!-- CARD DO FORMULÁRIO -->
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">
+                    <i class="fas fa-user me-2"></i>
+                    Dados para Entrega
+                </h5>
+            </div>
+            <div class="card-body">
+                <!-- FORMULÁRIO DE CHECKOUT -->
+                <form id="checkout-form" method="POST" action="{{ url_for('finalizar_pedido') }}" novalidate>
+                    <!--
+                        novalidate: Desabilita validação automática do navegador
+                        Permite usar validação customizada via JavaScript
+                    -->
+                    
+                    <!-- SEÇÃO: INFORMAÇÕES PESSOAIS -->
+                    <div class="mb-4">
+                        <h6 class="text-muted mb-3">
+                            <i class="fas fa-user-circle me-2"></i>
+                            Informações Pessoais
+                        </h6>
+                        
+                        <!-- CAMPO NOME COMPLETO -->
+                        <div class="mb-3">
+                            <label for="nome" class="form-label">
+                                Nome Completo <span class="text-danger">*</span>
+                            </label>
+                            <input type="text" 
+                                   class="form-control" 
+                                   id="nome" 
+                                   name="nome" 
+                                   required 
+                                   placeholder="Digite seu nome completo">
+                            <div class="invalid-feedback">
+                                Por favor, informe seu nome completo.
+                            </div>
+                            <!--
+                                invalid-feedback: Mensagem de erro do Bootstrap
+                                Aparece quando o campo tem classe 'is-invalid'
+                            -->
+                        </div>
+                        
+                        <!-- CAMPO TELEFONE -->
+                        <div class="mb-3">
+                            <label for="telefone" class="form-label">
+                                Telefone <span class="text-danger">*</span>
+                            </label>
+                            <input type="tel" 
+                                   class="form-control" 
+                                   id="telefone" 
+                                   name="telefone" 
+                                   required 
+                                   placeholder="(11) 99999-9999">
+                            <div class="form-text">
+                                <!--
+                                    form-text: Texto explicativo pequeno
+                                    Cor mais clara, tamanho menor
+                                -->
+                                Número para contato e confirmação do pedido
+                            </div>
+                            <div class="invalid-feedback">
+                                Por favor, informe um telefone válido.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- SEÇÃO: ENDEREÇO DE ENTREGA -->
+                    <div class="mb-4">
+                        <h6 class="text-muted mb-3">
+                            <i class="fas fa-map-marker-alt me-2"></i>
+                            Endereço de Entrega
+                        </h6>
+                        
+                        <!-- CAMPO ENDEREÇO COMPLETO -->
+                        <div class="mb-3">
+                            <label for="endereco" class="form-label">
+                                Endereço Completo <span class="text-danger">*</span>
+                            </label>
+                            <textarea class="form-control" 
+                                      id="endereco" 
+                                      name="endereco" 
+                                      rows="3" 
+                                      required 
+                                      placeholder="Rua, número, complemento, bairro, cidade..."></textarea>
+                            <div class="form-text">
+                                Inclua rua, número, complemento, bairro e pontos de referência
+                            </div>
+                            <div class="invalid-feedback">
+                                Por favor, informe o endereço completo para entrega.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- SEÇÃO: INFORMAÇÕES ADICIONAIS -->
+                    <div class="mb-4">
+                        <h6 class="text-muted mb-3">
+                            <i class="fas fa-comment me-2"></i>
+                            Informações Adicionais
+                        </h6>
+                        
+                        <!-- CAMPO OBSERVAÇÕES -->
+                        <div class="mb-3">
+                            <label for="observacoes" class="form-label">
+                                Observações (opcional)
+                            </label>
+                            <textarea class="form-control" 
+                                      id="observacoes" 
+                                      name="observacoes" 
+                                      rows="2" 
+                                      placeholder="Alguma observação especial sobre o pedido..."></textarea>
+                            <div class="form-text">
+                                Informações extras sobre o pedido ou entrega
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- SEÇÃO: TERMOS E CONDIÇÕES -->
+                    <div class="mb-4">
+                        <div class="form-check">
+                            <input class="form-check-input" 
+                                   type="checkbox" 
+                                   id="aceitar-termos" 
+                                   required>
+                            <label class="form-check-label" for="aceitar-termos">
+                                Aceito os <a href="#" data-bs-toggle="modal" data-bs-target="#termosModal">termos e condições</a> 
+                                <span class="text-danger">*</span>
+                            </label>
+                            <div class="invalid-feedback">
+                                Você deve aceitar os termos e condições.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- BOTÃO ENVIAR PEDIDO -->
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-success btn-lg">
+                            <i class="fas fa-whatsapp me-2"></i>
+                            Enviar Pedido via WhatsApp
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- COLUNA DO RESUMO (DIREITA) -->
+    <div class="col-lg-4">
+        <!-- RESUMO DO PEDIDO -->
+        <div class="card border-success mb-4 position-sticky" style="top: 20px;">
+            <!--
+                position-sticky: Fica fixo durante o scroll
+                style="top: 20px": Distância do topo quando fixo
+            -->
+            <div class="card-header bg-success text-white">
+                <h6 class="mb-0">
+                    <i class="fas fa-receipt me-2"></i>
+                    Resumo do Pedido
+                </h6>
+            </div>
+            <div class="card-body">
+                <!-- LISTA DE ITENS -->
+                <div class="mb-3">
+                    <h6 class="text-muted mb-2">Itens ({{ carrinho|length }})</h6>
+                    <div class="list-group list-group-flush">
+                        {% for item in carrinho %}
+                        <div class="list-group-item px-0 py-2">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div class="flex-grow-1">
+                                    <h6 class="mb-1 fw-bold">{{ item.nome }}</h6>
+                                    <small class="text-muted">
+                                        Qtd: {{ item.quantidade }} × {{ item.preco|currency }}
+                                    </small>
+                                </div>
+                                <div class="text-end">
+                                    <span class="fw-bold text-success">
+                                        {{ item.subtotal|currency }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <!-- TOTAL GERAL -->
+                <hr class="my-3">
+                <div class="d-flex justify-content-between">
+                    <strong class="h5">Total:</strong>
+                    <strong class="h5 text-success">{{ total|currency }}</strong>
+                </div>
+            </div>
+        </div>
+        
+        <!-- INFORMAÇÕES DE PAGAMENTO -->
+        <div class="card border-info">
+            <div class="card-header bg-info text-white">
+                <h6 class="mb-0">
+                    <i class="fas fa-credit-card me-2"></i>
+                    Informações de Pagamento
+                </h6>
+            </div>
+            <div class="card-body">
+                <!-- LOGO PIX -->
+                <div class="text-center mb-3">
+                    <div class="bg-light p-3 rounded">
+                        <i class="fas fa-qrcode fa-3x text-primary"></i>
+                        <div class="mt-2">
+                            <h6 class="mb-0">Pagamento via PIX</h6>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- DADOS PIX -->
+                <div class="mb-3">
+                    <label class="form-label text-muted">Chave PIX:</label>
+                    <div class="input-group">
+                        <input type="text" 
+                               class="form-control" 
+                               value="radiotatuapefm@gmail.com" 
+                               readonly 
+                               id="chave-pix">
+                        <button class="btn btn-outline-secondary" 
+                                type="button" 
+                                onclick="copiarPix()">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+                    <small class="form-text text-success">
+                        Clique no botão ao lado para copiar a chave PIX
+                    </small>
+                </div>
+                
+                <!-- INSTRUÇÕES -->
+                <div class="alert alert-warning">
+                    <h6 class="alert-heading">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        Importante:
+                    </h6>
+                    <ul class="mb-0">
+                        <li>Efetue o pagamento via PIX</li>
+                        <li>Envie o comprovante via WhatsApp</li>
+                        <li>A entrega será confirmada após o pagamento</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL TERMOS E CONDIÇÕES -->
+<div class="modal fade" id="termosModal" tabindex="-1">
+    <!--
+        Modal Bootstrap: Janela sobreposta
+        fade: Animação de entrada
+        tabindex="-1": Para acessibilidade
+    -->
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Termos e Condições</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <h6>1. Sobre os Pedidos</h6>
+                <p>Os pedidos devem ser feitos através do nosso sistema e confirmados via WhatsApp.</p>
+                
+                <h6>2. Pagamento</h6>
+                <p>Aceitamos apenas pagamento via PIX. O pedido só será processado após confirmação do pagamento.</p>
+                
+                <h6>3. Entrega</h6>
+                <p>O prazo de entrega será informado no momento da confirmação do pedido via WhatsApp.</p>
+                
+                <h6>4. Cancelamento</h6>
+                <p>Pedidos podem ser cancelados antes da confirmação do pagamento.</p>
+                
+                <h6>5. Responsabilidade</h6>
+                <p>É necessário ter mais de 18 anos para fazer pedidos de bebidas alcoólicas.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+                    Li e Aceito
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+<!-- SCRIPTS ESPECÍFICOS DO CHECKOUT -->
+{% block extra_scripts %}
+<script>
+    // JavaScript para funcionalidades do checkout
+    // ===========================================
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('Página de checkout carregada');
+        
+        setupFormValidation();
+        setupPhoneMask();
+    });
+    
+    function setupFormValidation() {
+        // Validação customizada do formulário
+        const form = document.getElementById('checkout-form');
+        
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); // Previne envio padrão
+            event.stopPropagation();
+            
+            // Remove classes de validação anteriores
+            form.classList.remove('was-validated');
+            
+            // Validação customizada
+            let isValid = true;
+            
+            // Valida nome
+            const nome = document.getElementById('nome');
+            if (nome.value.trim().length < 3) {
+                markFieldAsInvalid(nome, 'Nome deve ter pelo menos 3 caracteres');
+                isValid = false;
+            } else {
+                markFieldAsValid(nome);
+            }
+            
+            // Valida telefone
+            const telefone = document.getElementById('telefone');
+            const telefoneRegex = /^\(\d{2}\)\s\d{4,5}-\d{4}$/;
+            if (!telefoneRegex.test(telefone.value)) {
+                markFieldAsInvalid(telefone, 'Formato: (11) 99999-9999');
+                isValid = false;
+            } else {
+                markFieldAsValid(telefone);
+            }
+            
+            // Valida endereço
+            const endereco = document.getElementById('endereco');
+            if (endereco.value.trim().length < 10) {
+                markFieldAsInvalid(endereco, 'Endereço deve ser mais detalhado');
+                isValid = false;
+            } else {
+                markFieldAsValid(endereco);
+            }
+            
+            // Valida checkbox de termos
+            const termos = document.getElementById('aceitar-termos');
+            if (!termos.checked) {
+                markFieldAsInvalid(termos, 'Você deve aceitar os termos');
+                isValid = false;
+            } else {
+                markFieldAsValid(termos);
+            }
+            
+            if (isValid) {
+                // Se tudo válido, mostra loading e envia
+                const submitButton = form.querySelector('button[type="submit"]');
+                submitButton.disabled = true;
+                submitButton.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Processando...';
+                
+                // Envia o formulário
+                form.submit();
+            } else {
+                // Mostra feedback de erro
+                showToast('Por favor, corrija os erros no formulário', 'error');
+                
+                // Foca no primeiro campo com erro
+                const firstInvalidField = form.querySelector('.is-invalid');
+                if (firstInvalidField) {
+                    firstInvalidField.focus();
+                }
+            }
+        });
+    }
+    
+    function setupPhoneMask() {
+        // Máscara para telefone
+        const telefoneInput = document.getElementById('telefone');
+        
+        telefoneInput.addEventListener('input', function() {
+            let value = this.value.replace(/\D/g, ''); // Remove não-dígitos
+            
+            if (value.length <= 10) {
+                // Formato: (11) 9999-9999
+                value = value.replace(/^(\d{2})(\d{4})(\d{0,4}).*/, '($1) $2-$3');
+            } else {
+                // Formato: (11) 99999-9999
+                value = value.replace(/^(\d{2})(\d{5})(\d{0,4}).*/, '($1) $2-$3');
+            }
+            
+            this.value = value;
+        });
+        
+        // Permite apenas números, parênteses, espaços e hífens
+        telefoneInput.addEventListener('keypress', function(e) {
+            const char = String.fromCharCode(e.which);
+            if (!/[\d\(\)\s\-]/.test(char)) {
+                e.preventDefault();
+            }
+        });
+    }
+    
+    function markFieldAsValid(field) {
+        // Marca campo como válido
+        field.classList.remove('is-invalid');
+        field.classList.add('is-valid');
+    }
+    
+    function markFieldAsInvalid(field, message) {
+        // Marca campo como inválido
+        field.classList.remove('is-valid');
+        field.classList.add('is-invalid');
+        
+        // Atualiza mensagem de erro
+        const feedback = field.nextElementSibling;
+        if (feedback && feedback.classList.contains('invalid-feedback')) {
+            feedback.textContent = message;
+        }
+    }
+    
+    function copiarPix() {
+        // Copia chave PIX para clipboard
+        const chavePix = document.getElementById('chave-pix');
+        chavePix.select();
+        chavePix.setSelectionRange(0, 99999); // Para mobile
+        
+        try {
+            document.execCommand('copy');
+            showToast('Chave PIX copiada!', 'success');
+            
+            // Feedback visual no botão
+            const botaoCopiar = event.target.closest('button');
+            const iconeOriginal = botaoCopiar.innerHTML;
+            botaoCopiar.innerHTML = '<i class="fas fa-check text-success"></i>';
+            
+            setTimeout(() => {
+                botaoCopiar.innerHTML = iconeOriginal;
+            }, 2000);
+            
+        } catch (err) {
+            showToast('Erro ao copiar. Copie manualmente: radiotatuapefm@gmail.com', 'error');
+        }
+    }
+    
+    // Função para mostrar toasts (reutilizada)
+    function showToast(message, type = 'info') {
+        const toast = document.createElement('div');
+        toast.className = `alert alert-${type === 'success' ? 'success' : 'danger'} position-fixed`;
+        toast.style.cssText = 'top: 20px; right: 20px; z-index: 1050; min-width: 300px;';
+        toast.innerHTML = `
+            ${message}
+            <button type="button" class="btn-close" onclick="this.parentElement.remove()"></button>
+        `;
+        
+        document.body.appendChild(toast);
+        
+        setTimeout(() => {
+            if (toast.parentNode) {
+                toast.remove();
+            }
+        }, 5000); // 5 segundos para mensagens do checkout
+    }
+</script>
+{% endblock %}
