@@ -27,7 +27,14 @@ app.config['SECRET_KEY'] = 'sua-chave-secreta-aqui-mude-em-producao'
 # Configuração do banco de dados SQLite
 # SQLite é um banco de dados simples, ideal para desenvolvimento
 # O arquivo será criado na pasta instance/
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///adega.db'
+# Na Vercel, usa /tmp para banco temporário
+if os.environ.get('VERCEL'):
+    # Em produção na Vercel
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/adega.db'
+else:
+    # Em desenvolvimento local
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///adega.db'
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # INICIALIZAÇÃO DAS EXTENSÕES
