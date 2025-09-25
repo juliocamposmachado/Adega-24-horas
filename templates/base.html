@@ -19,9 +19,88 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Viewport: Torna o site responsivo em dispositivos móveis -->
     
+    <!-- SEO META TAGS -->
+    <meta name="description" content="{% block description %}Bem-vindo à Adega 24 Horas Radio Tatuapé FM! Bebidas geladas, preços populares, entrega via WhatsApp. Cervejas, vinhos, destilados e refrigerantes com qualidade e economia no Tatuapé, São Paulo.{% endblock %}">
+    <meta name="keywords" content="adega, bebidas, cervejas geladas, vinhos, destilados, refrigerantes, tatuapé, são paulo, entrega, whatsapp, pix, 24 horas, preços populares, radio tatuape fm">
+    <meta name="author" content="Julio Campos Machado - Like Look Solutions">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="pt-BR">
+    <meta name="revisit-after" content="7 days">
+    <meta name="rating" content="general">
+    
+    <!-- GEO TAGS -->
+    <meta name="geo.region" content="BR-SP">
+    <meta name="geo.placename" content="Tatuapé, São Paulo">
+    <meta name="geo.position" content="-23.5395,-46.5713">
+    <meta name="ICBM" content="-23.5395,-46.5713">
+    
+    <!-- BUSINESS INFO -->
+    <meta name="business:contact_data:street_address" content="Rua Dante Pellacani, 92">
+    <meta name="business:contact_data:locality" content="Tatuapé">
+    <meta name="business:contact_data:region" content="São Paulo">
+    <meta name="business:contact_data:postal_code" content="03334-070">
+    <meta name="business:contact_data:country_name" content="Brasil">
+    
+    <!-- OPEN GRAPH (Facebook, WhatsApp, etc) -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="{% block og_title %}Adega 24 Horas Radio Tatuapé FM - Bebidas Geladas e Preços Populares{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Sua adega de confiança no Tatuapé! Cervejas geladas, vinhos, destilados e refrigerantes com entrega via WhatsApp. Funcionamento 24 horas, preços que cabem no seu bolso!{% endblock %}">
+    <meta property="og:url" content="{{ request.url }}">
+    <meta property="og:site_name" content="Adega Rádio Tatuapé FM">
+    <meta property="og:image" content="{% block og_image %}{{ url_for('static', filename='images/logo-adega-social.jpg', _external=True) }}{% endblock %}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="pt_BR">
+    
+    <!-- TWITTER CARDS -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{% block twitter_title %}Adega 24 Horas Radio Tatuapé FM{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}Bebidas geladas, preços populares, entrega via WhatsApp no Tatuapé!{% endblock %}">
+    <meta name="twitter:image" content="{% block twitter_image %}{{ url_for('static', filename='images/logo-adega-social.jpg', _external=True) }}{% endblock %}">
+    
+    <!-- SCHEMA.ORG STRUCTURED DATA -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "LiquorStore",
+        "name": "Adega Rádio Tatuapé FM",
+        "description": "Adega 24 horas com bebidas geladas e preços populares no Tatuapé",
+        "url": "{{ request.url_root }}",
+        "logo": "{{ url_for('static', filename='images/logo-adega.png', _external=True) }}",
+        "image": "{{ url_for('static', filename='images/logo-adega-social.jpg', _external=True) }}",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Rua Dante Pellacani, 92",
+            "addressLocality": "Tatuapé",
+            "addressRegion": "SP",
+            "postalCode": "03334-070",
+            "addressCountry": "BR"
+        },
+        "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": "-23.5395",
+            "longitude": "-46.5713"
+        },
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+55-11-97060-3441",
+            "contactType": "customer service",
+            "availableLanguage": "Portuguese"
+        },
+        "sameAs": [
+            "https://www.ifood.com.br/delivery/sao-paulo-sp/adega-radio-tatuape-fm-24-horas-vila-regente-feijo/",
+            "https://wa.me/5511970603441"
+        ],
+        "openingHours": "Mo-Su 00:00-23:59",
+        "priceRange": "$$",
+        "paymentAccepted": "Pix, Dinheiro",
+        "currenciesAccepted": "BRL"
+    }
+    </script>
+    
     <!-- BLOCO TITLE: Permite que páginas filhas definam títulos personalizados -->
     <title>
-        {% block title %}Adega Rádio Tatuapé FM{% endblock %}
+        {% block title %}Adega Rádio Tatuapé FM - Bebidas 24 Horas | Entrega WhatsApp | Tatuapé SP{% endblock %}
     </title>
     
     <!-- BOOTSTRAP CSS: Framework para estilização e responsividade -->
@@ -187,9 +266,15 @@
                             radiotatuapefm@gmail.com
                         </a>
                     </p>
-                    <p class="mb-0">
+                    <p class="mb-1">
                         <i class="fas fa-map-marker-alt me-2"></i>
-                        Vila Regente Feijó - São Paulo/SP
+                        Rua Dante Pellacani, 92 - Tatuapé - CEP: 03334-070
+                    </p>
+                    <p class="mb-0">
+                        <i class="fab fa-whatsapp me-2 text-success"></i>
+                        <a href="https://wa.me/5511970603441" class="text-light text-decoration-none" target="_blank">
+                            WhatsApp: Faça seu pedido
+                        </a>
                     </p>
                 </div>
             </div>
@@ -198,13 +283,40 @@
             <!-- hr: Linha horizontal separadora -->
             
             <div class="text-center">
-                <p class="mb-0">
+                <p class="mb-1">
                     &copy; 2024 Adega Rádio Tatuapé FM - Todos os direitos reservados
                 </p>
-                <small class="text-muted">
-                    <!-- text-muted: Cor de texto mais clara -->
-                    Desenvolvido com Flask e Bootstrap
-                </small>
+                <p class="mb-1">
+                    <small class="text-muted">
+                        Desenvolvido por 
+                        <a href="https://likelook.wixsite.com/solutions" class="text-info text-decoration-none" target="_blank">
+                            <i class="fas fa-code me-1"></i>Like Look Solutions
+                        </a> 
+                        | 
+                        <a href="tel:+5511970603441" class="text-info text-decoration-none">
+                            <i class="fas fa-phone me-1"></i>(11) 97060-3441
+                        </a>
+                    </small>
+                </p>
+                <p class="mb-1">
+                    <small class="text-muted">
+                        Tecnologia: Flask • Bootstrap • SQLAlchemy • JavaScript
+                    </small>
+                </p>
+                <p class="mb-0">
+                    <small class="text-muted">
+                        <a href="https://www.ifood.com.br/delivery/sao-paulo-sp/adega-radio-tatuape-fm-24-horas-vila-regente-feijo/" 
+                           class="text-warning text-decoration-none me-3" target="_blank">
+                            <i class="fas fa-utensils me-1"></i>Pedir no iFood
+                        </a>
+                        <a href="{{ url_for('robots_txt') }}" class="text-muted text-decoration-none me-3">
+                            <i class="fas fa-robot me-1"></i>robots.txt
+                        </a>
+                        <a href="{{ url_for('sitemap_xml') }}" class="text-muted text-decoration-none">
+                            <i class="fas fa-sitemap me-1"></i>sitemap.xml
+                        </a>
+                    </small>
+                </p>
             </div>
         </div>
     </footer>

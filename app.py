@@ -269,10 +269,19 @@ def index():
     - @app.route(): Decorador que define uma rota URL
     - render_template(): Função que renderiza um template HTML
     - Query do banco: Produto.query.filter_by().all()
+    - Filtros por categoria via query string (?categoria=cerveja)
     """
     
-    # Busca todos os produtos ativos no banco de dados
-    produtos = Produto.query.filter_by(ativo=True).all()
+    # Obtém parâmetro de categoria da URL (se houver)
+    categoria_filtro = request.args.get('categoria')
+    
+    # Busca produtos baseado no filtro de categoria
+    if categoria_filtro:
+        produtos = Produto.query.filter_by(ativo=True, categoria=categoria_filtro).all()
+        titulo_categoria = categoria_filtro.replace('_', ' ').title()
+    else:
+        produtos = Produto.query.filter_by(ativo=True).all()
+        titulo_categoria = None
     
     # Obter carrinho atual
     carrinho = obter_carrinho()
@@ -281,7 +290,9 @@ def index():
     # Renderiza o template passando os produtos
     return render_template('index.html', 
                          produtos=produtos, 
-                         total_itens=total_itens)
+                         total_itens=total_itens,
+                         categoria_atual=categoria_filtro,
+                         titulo_categoria=titulo_categoria)
 
 @app.route('/produto/<int:produto_id>')
 def detalhes_produto(produto_id):
@@ -545,6 +556,74 @@ def admin():
     """
     pedidos = Pedido.query.order_by(Pedido.data_pedido.desc()).all()
     return render_template('admin.html', pedidos=pedidos)
+
+# ROTAS PARA SEO
+# =====================================================
+@app.route('/robots.txt')
+def robots_txt():
+    """
+    Rota para servir o arquivo robots.txt para SEO
+    """
+    from flask import send_from_directory
+    return send_from_directory(app.static_folder, 'robots.txt')
+
+@app.route('/sitemap.xml')
+def sitemap_xml():
+    """
+    Rota para gerar sitemap.xml dinâmico
+    Lista todas as URLs importantes do site
+    """
+    from flask import make_response
+    from datetime import datetime
+    
+    # URLs estáticas do site
+    urls = [
+        {
+            'loc': url_for('index', _external=True),
+            'lastmod': datetime.now().strftime('%Y-%m-%d'),
+            'changefreq': 'daily',
+            'priority': '1.0'
+        },
+        {
+            'loc': url_for('carrinho', _external=True),
+            'lastmod': datetime.now().strftime('%Y-%m-%d'),
+            'changefreq': 'weekly',
+            'priority': '0.8'
+        },
+        {
+            'loc': url_for('checkout', _external=True),
+            'lastmod': datetime.now().strftime('%Y-%m-%d'),
+            'changefreq': 'monthly',
+            'priority': '0.7'
+        }
+    ]
+    
+    # Adiciona URLs de produtos individuais
+    produtos = Produto.query.filter_by(ativo=True).all()
+    for produto in produtos:
+        urls.append({
+            'loc': url_for('detalhes_produto', produto_id=produto.id, _external=True),
+            'lastmod': produto.data_criacao.strftime('%Y-%m-%d'),
+            'changefreq': 'weekly',
+            'priority': '0.6'
+        })
+    
+    # Adiciona URLs de categorias
+    categorias = ['cerveja', 'vinho', 'destilados', 'refrigerante', 'agua', 'energetico', 'suco']
+    for categoria in categorias:
+        urls.append({
+            'loc': url_for('index', categoria=categoria, _external=True),
+            'lastmod': datetime.now().strftime('%Y-%m-%d'),
+            'changefreq': 'weekly',
+            'priority': '0.8'
+        })
+    
+    # Gera XML do sitemap
+    sitemap_xml = render_template('sitemap.xml', urls=urls)
+    response = make_response(sitemap_xml)
+    response.headers["Content-Type"] = "application/xml"
+    
+    return response
 
 # CONTEXT PROCESSORS
 # =====================================================

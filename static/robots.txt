@@ -1,0 +1,38 @@
+User-agent: *
+Allow: /
+
+# Permitir indexação de todas as páginas principais
+Allow: /static/
+Allow: /carrinho
+Allow: /checkout
+
+# Bloquear páginas administrativas e de desenvolvimento
+Disallow: /admin
+Disallow: /api/
+Disallow: /_debug
+
+# Sitemap
+Sitemap: https://adega-24-horas-ifood.vercel.app/sitemap.xml
+
+# Crawl-delay para não sobrecarregar o servidor
+Crawl-delay: 1
+
+# Informações específicas para Google
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+# Informações específicas para Bing
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+# Informações específicas para Facebook (compartilhamentos)
+User-agent: facebookexternalhit
+Allow: /
+Allow: /static/images/
+
+# Informações específicas para WhatsApp (compartilhamentos)
+User-agent: WhatsApp
+Allow: /
+Allow: /static/images/
